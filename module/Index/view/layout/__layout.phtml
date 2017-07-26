@@ -1,0 +1,42 @@
+<?php 
+    echo $this->doctype(); 
+    $this->plugin('basePath')->setBasePath('/public/');
+?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        ->prependStylesheet($this->basePath('vendor/bootstrap/3.3.7/css/bootstrap.min.css')) 
+                        ->prependStylesheet($this->basePath('vendor/font-awesome/4.7/css/font-awesome.min.css'))
+                        ->prependStylesheet($this->basePath('vendor/jquery-ui/1.11.4/jquery-ui.css')) ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath('vendor/outros/js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath('vendor/outros/js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
+//            ->prependFile($this->basePath('vendor/auto-numeric-1.9/autoNumeric.js'))
+            ->prependFile($this->basePath('vendor/outros/js/filter_input.js'))
+            ->prependFile($this->basePath('vendor/outros/js/jquery_mask.js'))
+            ->prependFile($this->basePath('vendor/jquery-ui/datepicker-pt-BR.js'))
+            ->prependFile($this->basePath('vendor/jquery-ui/1.11.4/jquery-ui.min.js'))
+            ->prependFile($this->basePath('vendor/bootstrap/3.3.7/js/bootstrap.min.js'))
+            ->prependFile($this->basePath('vendor/jquery/2.2.3.min.js'))
+        ; ?>
+
+    </head>
+     <body>
+        <div style="height: 100%">
+            <?php echo $this->content; ?>
+        </div> <!-- /container -->
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>

@@ -1,0 +1,42 @@
+
+<script type="text/javascript" src="/public/js/financeiro/categorias.js"></script>
+
+<div id="finan_lanc_janela" class="janela col-lg-push-4 col-lg-2" style="display: none" data-title="FinanCategorias">
+    <div class="divisao-janela">
+        <form id="finan_lanc_modal_cat_form">
+                <div class="modal-header">
+                    <button type="button" data-toggle="tooltip" data-placement="bottom" title="Fechar">
+                        <i class="fa fa-close "></i>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit "></i> Categorias</h4>
+                </div>
+                <div class="modal-body clearfix">
+
+                    <div id="finan_lanc_modal_cat_alertas" class="label label-default col-lg-12 hide"></div>
+
+                    <div class="form-group col-lg-12">
+                        <label>Categoria *</label>
+                        <select class="form-control" name="id" id="finan_lanc_modal_cat_id">
+                            <option value="0">Nova...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-lg-12">
+                        <label>Nome *</label>
+                        <input class="form-control col-lg-12" name="nome" id="finan_lanc_modal_cat_nome" required />
+                    </div>
+
+                    <div class="col-lg-3" style="float: right">
+                        <input type="checkbox" name="status" id="finan_lanc_modal_cat_status" checked /> Ativa
+                    </div>
+
+                    <div class="col-lg-12 text-center" >
+                        <button class="text-center btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Confirmar">
+                            <i class="fa fa-check" style="color:#cc7a00"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+    </div>
+</div>

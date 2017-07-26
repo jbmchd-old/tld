@@ -1,0 +1,163 @@
+
+<script type="text/javascript" src="/public/js/produtos/estoque.js"></script>
+
+<div id="prod_est_janela" class="janela col-lg-11" style="display: none" data-title="ProdEst">
+    <div class="divisao-janela">
+        <form method="POST" action="" id="prod_est_form">
+            <div class="modal-header">
+                <button type="button" data-toggle="tooltip" data-placement="bottom" title="Fechar">
+                    <i class="fa fa-close "></i>
+                </button>
+                <h4 class="modal-title"><i class="fa fa-shopping-cart "></i> Gerenciamento de Produtos</h4>
+            </div>
+            <div class="modal-body clearfix" style="padding-bottom: 5px;">
+
+                <div id="prod_est_alertas" class="label label-default col-lg-12 hide"></div>
+
+                <div class="col-lg-12">
+                    <div class="col-lg-12">
+                        <fieldset class="col-lg-2">
+                            <legend>Fornecedores:</legend>
+                            <div class="clearfix" style="margin: 7px 0;">
+                                <div>
+                                    <select id="prod_est_forn_select" class="form-control" name="fornecedor_id" > <option>Selecione...</option> </select>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="col-lg-2">
+                            <legend>Marcas:</legend>
+                            <div class="clearfix" style="margin: 7px 0;">
+                                <div>
+                                    <select id="prod_est_marca_select" class="form-control" name="marca_id" > <option>Selecione...</option> </select>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="col-lg-2">
+                            <legend>Categorias:</legend>
+                            <div class="clearfix" style="margin: 7px 0;">
+                                <div>
+                                    <select id="prod_est_categoria_select" class="form-control" name="categoria_id" > <option>Selecione...</option> </select>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-lg-12">
+                        <fieldset>
+                            <legend>Produtos:</legend>
+                            <div class="col-lg-12" style="margin: 7px 0; max-height:400px; overflow:auto;">
+                                <table id="prod_est_tabela" class="table table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Marca</th>
+                                            <th>Categoria</th>
+                                            <th>Cod. Aux.</th>
+                                            <th>Descrição</th>
+                                            <th>Quant.</th>
+                                            <th>Unid.</th>
+                                            <th>Esp.</th>
+                                            <th>Custo</th>
+                                            <th>Venda</th>
+                                            <th>Status</th>
+                                            <th>Obs</th>
+                                            <th><i class="fa fa-edit"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="prod_est_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-sm">
+            <form id="prod_est_modal_form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-close "></i></button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit "></i> Alterar produto</h4>
+                </div>
+                <div class="modal-body clearfix">
+
+                    <div id="prod_est_modal_alertas" class="label label-default col-lg-12 hide"></div>
+
+                    <div class="col-lg-12">
+                        <fieldset>
+                            <legend class="clearfix" style="margin: 7px 0;">Produto: </legend>
+                            <div class="form-group col-lg-12">
+                                <label>Fornecedor*</label>
+                                <select id="prod_est_modal_forn_select" class="form-control" name="fornecedor_id" required > <option>Selecione...</option> </select>
+                            </div>
+                            <div class="form-group col-lg-6" >
+                                <label>Marca*</label>
+                                <select id="prod_est_modal_marca_select" class="form-control" name="marca_id" required > <option>Selecione...</option> </select>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>Categorias*</label>
+                                <select id="prod_est_modal_categoria_select" class="form-control" name="categoria_id" required > <option>Selecione...</option> </select>
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label>Descricao*</label>
+                                <input type="text" class="form-control" name="descricao" id="prod_est_modal_descricao" required />
+                            </div>
+                            <div class="form-group col-lg-6" >
+                                <label>Cod. Auxiliar</label>
+                                <input type="text" class="form-control" name="codigoauxiliar" id="prod_est_modal_codauxiliar" />
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>Quantidade*</label>
+                                <input type="text" class="form-control" name="quantidade" id="prod_est_modal_quantidade" required />
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>Unidade*</label>
+                                <select id="prod_est_modal_unidade" class="form-control" name="unidade" required > 
+                                    <option value="">Selecione...</option> 
+                                    <option value="UNID">UNIDADE</option> 
+                                    <option value="METRO">METRO</option> 
+                                    <option value="JOGO">JOGO</option> 
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>Espessura</label>
+                                <input type="text" class="form-control" name="espessura" id="prod_est_modal_espessura" />
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>P. custo*</label>
+                                <input type="text" class="form-control" name="precocusto" id="prod_est_modal_precocusto" data-mask="money" required />
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>P. venda*</label>
+                                <input type="text" class="form-control" name="precovenda" id="prod_est_modal_precovenda" data-mask="money" required />
+                            </div>
+                            <div>
+                                <div class="form-group col-lg-12">
+                                    <label>Observações</label>
+                                    <textarea id="prod_est_modal_obs" name="obs" class="form-control" ></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-12 text-right">
+                                <input type="checkbox" name="status" id="prod_est_modal_status" checked />
+                                <label>Ativo</label>
+                            </div>
+                        </fieldset>
+
+                        <input type="hidden" class="form-control" name="id" id="prod_est_modal_id" />
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="prod_est_modal_confirmar" class="text-center" data-toggle="tooltip" data-placement="bottom" title="Confirmar">
+                        <i class="fa fa-check "></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

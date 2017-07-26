@@ -1,0 +1,116 @@
+
+<script type="text/javascript" src="/public/js/financeiro/lancamentos.js"></script>
+
+<style>
+    .modal-lg {
+        width: 1300px;
+    }
+
+    .table button, .table button:hover {
+        background: transparent;
+        padding: 0;
+        font-size: 14px;
+    }
+</style>
+
+<div id="finan_lanc_janela" class="janela col-lg-push-2 col-lg-7" style="display: none" data-title="FinanLanc">
+    <div class="divisao-janela">
+        <form method="POST" id="finan_lanc_form">
+            <div class="modal-header">
+                <button type="button" data-toggle="tooltip" data-placement="bottom" title="Fechar">
+                    <i class="fa fa-close "></i>
+                </button>
+                <h4 class="modal-title"><i class="fa fa-money"></i> Lançamentos </h4>
+            </div>
+            <div class="modal-body clearfix" style="padding-bottom: 5px;">
+
+                <div id="finan_lanc_alertas" class="label label-default col-lg-12 hide"></div>
+
+                <div class="col-lg-5">
+
+                    <div>
+                        <div class="form-group col-lg-12">
+                            <label>Categoria *</label>
+                            <select class="form-control" id="finan_lanc_cat"></select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Descrição *</label>
+                            <input type="text" class="form-control" name="finan_lanc_descricao" id="finan_lanc_descricao" required />
+                        </div>
+
+                        <div class="form-group col-lg-12" id="finan_lanc_tipo">
+                            <label>Tipo de lançamento *</label><br>
+                            <input type="radio" value="D" name="tipo" checked /> Despesa
+                            <input type="radio" value="R" name="tipo" /> Receita
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-12">
+                        <label>Vencimento *</label><br>
+
+                        <div class="form-group col-lg-6">
+                            <label>Data</label>
+                            <input class="form-control" id="finan_lanc_dtavencimento" readonly />
+                        </div>
+
+                        <div class="form-group col-lg-6">
+                            <label>Valor</label>
+                            <input class="form-control" name="finan_lanc_valor" id="finan_lanc_valor" data-mask="money" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-12"> 
+                        <input type="checkbox" value="S" id="finan_lanc_situacao" /> Pago
+                    </div>
+
+                    <div id="finan_lanc_pagamento" class="col-lg-12 finan_lanc_dtapagamento hide">
+
+                        <div class="form-group col-lg-6">
+                            <label>Data Pagamento</label>
+                            <input class="form-control" id="finan_lanc_dtapagamento" readonly />
+                        </div>
+                        
+                        <div id="finan_lanc_tipopagamento" class="form-group col-lg-6">
+                            <label>Tipo Pagamento</label><br />
+                            <input type="radio" value="AV" name="tipopagamento" checked /> A Vista
+                            <input type="radio" value="CH" name="tipopagamento" /> Cheque
+                        </div>
+
+                    </div>
+                    
+                    <input type="hidden" id="finan_lanc_id" />
+                    
+                    <div class="col-lg-12 text-center" >
+                        <button class="text-center btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Confirmar">
+                            <i class="fa fa-check" style="color:#cc7a00"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+                <div id="finan_lanc_ultlanc" class="col-lg-7" style="border-left: 1px solid #CCC;">
+                    <label>Últimos Lançamentos</label>
+                    <button type="button" id="finan_lanc_ultlanc_btn" class="btn btn-default btn-sm" style="margin: 5px"><i class="fa fa-eye"></i></button><br>
+                    
+                    <div class="col-lg-12" style="/*min-height: 275px*/">
+                        <table class="table table-bordered table-condensed table-striped" id="finan_lanc_tab_ultlanc">
+                            <thead>
+                                <tr>
+                                    <th class="col-lg-1">#</th>
+                                    <th>Descrição</th>
+                                    <th class="col-lg-2">Inclusão</th>
+                                    <th class="col-lg-1">Editar</th>
+                                </tr>
+                            </thead>
+                            <tbody class="hide"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

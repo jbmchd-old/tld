@@ -1,0 +1,134 @@
+
+
+<script type="text/javascript" src="/public/js/produtos/marcas.js"></script>
+
+<div id="marc_janela" class="janela col-xs-offset-2 col-sm-offset-2 col-md-offset-1 col-lg-offset-1 col-lg-8" style="display: none" data-title="ProdMarcas">
+    <div class="divisao-janela">
+        <form method="POST" action="" id="marc_form">
+            <div class="modal-header">
+                <button type="button" data-toggle="tooltip" data-placement="bottom" title="Fechar">
+                    <i class="fa fa-close "></i>
+                </button>
+                <h4 class="modal-title"><i class="fa fa-shopping-cart "></i> Gerenciamento de Marcas</h4>
+            </div>
+            <div class="modal-body clearfix" style="padding-bottom: 5px;">
+                
+                <div id="marc_alertas" class="label label-default col-lg-12 hide"></div>
+
+                <div class="col-lg-4">
+                
+                    <fieldset>
+                        <legend>Fornecedor:</legend>
+                        <div class="col-lg-12" style="margin: 7px 0; max-height:400px; overflow:auto;">
+                            <select id="marc_forn_select" class="form-control" name="pessoas_id" required > <option>Selecione...</option> </select>
+                        </div>
+                    </fieldset>
+                    
+                    <div id="marc_alertas" class="label label-default col-lg-12 hide"></div>
+
+                    <!--<div class="col-lg-12">-->
+                        <fieldset>
+                            <legend>Nova: </legend>
+<!--                            <div class="form-group col-lg-12">
+                                <label>Marca*</label>
+                                <select id="marc_select" class="form-control" name="id" > <option>Nova...</option> </select>
+                            </div>-->
+<!--                            <div class="col-lg-3" style="margin: 20px 0 5px 0; max-height:400px; overflow:auto;">
+                                <button type="button" id="marc_add_marca" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Marca</button>
+                            </div>-->
+                            <div class="form-group col-lg-12">
+                                <label>Nome*</label>
+                                <input type="text" class="form-control" name="nome" id="marc_nome" required />
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label>Obs</label>
+                                <textarea class="form-control" name="obs" id="marc_obs"></textarea>
+                            </div>
+                            <div class="form-group col-lg-12 text-right">
+                                <input type="checkbox" class="" name="status" id="marc_status" checked />
+                                <label>Ativo</label>
+                            </div>
+                           
+                        </fieldset>
+                        
+                    <!--</div>-->
+                    <div class="col-lg-12 text-right" >
+                        <button type="button" id="marc_desfazer" class="text-center btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Desfazer">
+                            <i class="fa fa-undo "></i>
+                        </button>
+                        <button class="text-center btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Confirmar">
+                            <i class="fa fa-check " style="color:#cc7a00"></i>
+                        </button>
+                    </div>
+                    
+                </div>
+                <div class="col-lg-8">
+                    <fieldset>
+                        <legend>Marcas:</legend>
+                        <div class="col-lg-12" style="margin: 7px 0; max-height:400px; overflow:auto;">
+                            <table id="marc_tabela" class="table table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="col-lg-1">#</th>
+                                        <th class="col-lg-3">Nome</th>
+                                        <th class="col-lg-1">Status</th>
+                                        <th>Obs</th>
+                                        <th class="col-lg-1"><i class="fa fa-edit"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="marc_modal_marca" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <form id="marc_modal_form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-close "></i></button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit "></i> Gerenciar marcas</h4>
+                </div>
+                <div class="modal-body clearfix">
+
+                    <div id="marc_modal_alertas" class="label label-default col-lg-12 hide"></div>
+
+                    <div class="col-lg-12">
+                        <fieldset>
+                            <legend>Marcas: </legend>
+                            <div class="form-group col-lg-12">
+                                <label>Fornecedor*</label>
+                                <select id="modal_forn_select" class="form-control" name="fornecedor_id" > </select>
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label>Nome*</label>
+                                <input type="text" class="form-control" name="nome" id="modal_marc_nome" required />
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label>Obs</label>
+                                <textarea class="form-control" name="obs" id="modal_marc_obs"></textarea>
+                            </div>
+                            <div class="form-group col-lg-12 text-right">
+                                <input type="checkbox" class="" name="status" id="modal_marc_status" checked />
+                                <label>Ativo</label>
+                            </div>
+                            <input type="hidden" name="id" id="modal_marc_id" />
+                        </fieldset>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="marc_modal_marc_confirmar" class="text-center" data-toggle="tooltip" data-placement="bottom" title="Confirmar">
+                        <i class="fa fa-check "></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

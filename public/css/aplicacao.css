@@ -1,0 +1,213 @@
+body{
+    color: #4F4F51;
+    overflow:hidden;
+}
+
+select{
+    max-height: 30px;
+}
+
+hr {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.navbar-default {
+  color: #fff;
+}
+
+*{
+    font-family: 'Roboto', sans-serif;
+    font-size: small;
+}
+
+.modal-header{
+    background-color: #fff;
+}
+
+.janela .modal-header {
+    padding: 5px 1px 1px 5px;
+}
+
+.modal-body{
+    background: #f6f7f2;
+}
+
+.modal-footer{
+    background: #fff;
+    padding: 0;
+}
+
+.modal-footer button{
+    transition: color 0.3s ease;
+    border: none;
+    background: transparent;
+}
+
+.modal-footer button:hover{
+    transition: color 0.3s ease;
+}
+
+.modal-header button{
+    transition: color 0.3s ease;
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    text-align: right;
+    float: right;
+    font-size: 1.3em
+}
+
+.modal-header button:hover{
+    transition: color 0.3s ease;
+}
+
+#modal_confirmar .modal-header{
+    background-color: #fff;
+    color: #4F4F51;
+}
+
+#modal_confirmar .modal-body{
+    background: #f6f7f2;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+#modal_confirmar .modal-footer{
+    background: #fff;
+    padding: 0;
+}
+
+#modal_confirmar .modal-header button{
+    color: #4F4F51;
+}
+
+#modal_confirmar .modal-header button:hover{
+    color: #EF5350;
+}
+
+#modal_confirmar .modal-footer button{
+    color: #4F4F51;
+}
+
+#modal_confirmar .modal-footer button:hover{
+    color: #EF5350;
+}
+
+.table{
+    background: white;
+}
+
+.table button{
+    /*background: transparent;*/
+    border: none;
+    padding: 2px 6px;
+    /*color: #d33131;*/
+    font-size: 16px;
+}
+
+.table button:hover{
+    color: #FF9900;
+}
+
+th{
+    text-align: center;
+}
+
+.no-padding{
+    padding: 0;
+}
+
+.sidebar{
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding-top: 0px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #232325;
+    border-right: 1px solid #42425c;
+}
+
+.btn-app, .btn-app-dropdown{
+    transition: background 0.3s ease;
+    /*background: #383C3F;*/
+    background: #FFE8CF;
+    color: #FF9900;
+    border: none;
+    padding: 9px 10px;
+    /*margin-top: 10px ;*/
+}
+
+.btn-app:hover, .btn-app-dropdown:hover{
+    /*background: #FF9900;*/
+    transition: background 0.3s ease;
+}
+
+.janela{
+    padding:10px;
+    position: relative;
+    max-height: 600px;
+    overflow: auto;
+}
+
+.icon-input {
+    width:30px !important
+}
+
+.icon-janela-titulo {
+    margin-right: 6px
+}
+
+.janela .modal-body{
+    padding: 0;
+}
+
+.janela .modal-body .label{
+    border-radius: 0px;
+    line-height: 1.4;
+    font-size: 85%;
+}
+
+.table tbody td {
+    text-align: center;
+    padding: 0;
+}
+
+.table tbody td[data-tipo='number'],
+.table tbody td[data-tipo='currency']{
+    text-align: right;
+}
+
+.table tbody td[data-tipo='date'],
+.table tbody td[data-tipo='button'] {
+    text-align: center;
+}
+
+form {
+    margin: 0;
+}
+
+.row{
+    margin: 0;
+}
+
+.float-left{float: left}
+
+.float-right{float: right}
+
+.cursor-pointer{cursor: pointer}
+
+.clear-both {clear: both}
+
+.display-none {display: none}
+
+.fa-1x { font-size: 1.5em; }
+
+.ui-autocomplete {z-index: 10000;}
+
+.danger { color: #d43f3a }
+.success { color: #4cae4c }

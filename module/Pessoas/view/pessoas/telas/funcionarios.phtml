@@ -1,0 +1,118 @@
+
+
+<script type="text/javascript" src="/public/js/pessoas/funcionarios.js"></script>
+
+<div id="func_janela" class="janela col-xs-offset-2 col-sm-offset-2 col-md-offset-1 col-lg-offset-1 col-lg-8" style="display: none" data-title="Funcionarios">
+    <div class="divisao-janela">
+        <form method="POST" action="/funcionarios/salvar" id="func_form">
+            <div class="modal-header">
+                <button type="button" data-toggle="tooltip" data-placement="bottom" title="Fechar">
+                    <i class="fa fa-close "></i>
+                </button>
+                <h4 class="modal-title"><i class="fa fa-address-card "></i> Gerenciamento de Funcionários</h4>
+            </div>
+            <div class="modal-body clearfix">
+
+                <div id="func_alertas" class="label label-default col-lg-12 hide"></div>
+
+                <div class="col-lg-6">
+                    <fieldset>
+                        <legend>Pessoa:</legend>
+                        <div class="col-lg-12" style="margin: 7px 0; max-height:400px; overflow:auto;">
+                            <select id="func_select" class="form-control" > <option>Novo...</option> </select>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Adicionar: </legend>
+                        <div class="form-group col-lg-6">
+                            <label>Cargo*</label>
+                            <input type="text" class="form-control" name="cargo" id="func_cargo" required />
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label>Salário*</label>
+                            <input type="text" class="form-control" name="salario" id="func_salario" data-tipo="currency" required />
+                        </div>
+                        <div>
+                            <div class="form-group col-lg-12">
+                                <label>Observações</label>
+                                <textarea id="func_obs" name="obs" class="form-control" ></textarea>
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-lg-6">
+                    <fieldset>
+                        <legend>Últimos lançamentos:</legend>
+                        <div class="col-lg-12" style="margin: 7px 0; max-height:400px; overflow:auto;">
+                            <table id="func_ult_lanc" class="table table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="col-lg-4">Cargo</th>
+                                        <th class="col-lg-2">Salário</th>
+                                        <th>Obs</th>
+                                        <th class="col-lg-1"><i class="fa fa-edit"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="func_desfazer" class="text-center" data-toggle="tooltip" data-placement="bottom" title="Desfazer">
+                    <i class="fa fa-undo "></i>
+                </button>
+                <button class="text-center" data-toggle="tooltip" data-placement="bottom" title="Confirmar">
+                    <i class="fa fa-check "></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="func_alter_func" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="func_modal_form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-close "></i></button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit "></i> Alterar</h4>
+                </div>
+                <div class="modal-body clearfix">
+
+                    <div id="func_modal_alertas" class="label label-default col-lg-12 hide"></div>
+
+                    <div class="col-lg-12">
+                        <fieldset>
+                            <legend>Alterar: </legend>
+                            <div class="form-group col-lg-6">
+                                <label>Cargo*</label>
+                                <input type="text" class="form-control" name="cargo" id="modal_func_cargo" required />
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>Salário*</label>
+                                <input type="text" class="form-control" name="salario" id="modal_func_salario" data-tipo="currency" required />
+                            </div>
+                            <div>
+                                <div class="form-group col-lg-12">
+                                    <label>Observações</label>
+                                    <textarea id="modal_func_obs" name="obs" class="form-control" ></textarea>
+                                </div>
+
+                            </div>
+                            <input type="hidden" class="form-control" name="id" id="modal_func_id" />
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="func_modal_func_confirmar" class="text-center" data-toggle="tooltip" data-placement="bottom" title="Confirmar">
+                        <i class="fa fa-check "></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

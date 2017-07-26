@@ -1,0 +1,116 @@
+
+
+<script type="text/javascript" src="/public/js/pessoas/pessoas.js"></script>
+
+<div id="pes_janela" class="janela col-xs-offset-2 col-sm-offset-2 col-md-offset-1 col-lg-offset-1 col-lg-8" style="display: none" data-title="Pessoas">
+    <div class="divisao-janela">
+        <form method="POST" id="pessoas_form">
+            <div class="modal-header">
+                <button type="button" data-toggle="tooltip" data-placement="bottom" title="Fechar">
+                    <i class="fa fa-close "></i>
+                </button>
+                <h4 class="modal-title"><i class="fa fa-user "></i> Gerenciamento de Pessoas</h4>
+            </div>
+            <div class="modal-body clearfix">
+
+                <div id="pessoas_alertas" class="label label-default col-lg-12 hide"></div>
+
+                <div class="col-lg-12" style="margin: 7px 0; max-height:400px; overflow:auto;">
+                    <fieldset>
+                        <legend>Pessoa:</legend>
+                        <select id="pes_select" class="form-control" > <option>Novo...</option> </select>
+                    </fieldset>
+                </div>
+
+                <div class="col-lg-12">
+                    <fieldset>
+                        <legend> Tipo: </legend>
+                        <div class="form-group">
+                            <span class="form-group ">
+                                <input type="radio" id="pes_tipo_cli" name="tipo" value="CLI" checked />
+                                <label>Cliente</label>
+                            </span>
+                            <span class="form-group ">
+                                <input type="radio" id="pes_tipo_func" name="tipo" value="FUN" />
+                                <label>Funcionário</label>
+                            </span>
+                            <span class="form-group ">
+                                <input type="radio" id="pes_tipo_forn" name="tipo" value="FORN" />
+                                <label>Fornecedor</label>
+                            </span>
+                        </div>
+                    </fieldset>
+                    <div class="col-lg-6 float-left" style="padding-left: 0">
+
+                        <fieldset>
+                            <legend>Dados:</legend>
+                            <div class="form-group col-lg-2">
+                                <label>Código</label>
+                                <input type="text" name="id" class="form-control" readonly />
+                            </div>
+                            <div class="form-group col-lg-10">
+                                <label>Nome/Razão*</label>
+                                <input type="text" name="nome_razao" class="form-control" required />
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Doc. Tipo*</label>
+                                <select name="tipodocumento" id="pes-doc_tipo" class="form-control">
+                                    <option value="CPF">CPF</option>
+                                    <option value="CNPJ">CNPJ</option>
+                                    <option value="RG">RG</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-4" id="pes_div_nrodocumento">
+                                <label>Doc. Número*</label>
+                                <input type="text" id="pes_doc_num_cpf" name="nrodocumento" class="form-control" data-mask="000.000.000-00" required />
+                                <input type="text" id="pes_doc_num_cnpj" name="nrodocumento" class="form-control hide" data-mask="00.000.000/0000-00" />
+                                <input type="text" id="pes_doc_num_rg" name="nrodocumento" class="form-control hide" />
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Data Nasc.</label>
+                                <input type="text" id="pes_dta_nasc" name="dtanascimento" class="form-control col-lg-12" data-mask="00/00/0000" readonly />
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label>Observações</label>
+                                <textarea name="obs" class="form-control" maxlength="1024" ></textarea>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-lg-6">
+                        <fieldset>
+                            <legend> Contato: </legend>
+                            <div class="form-group col-lg-6">
+                                <label>Email*</label>
+                                <input type="text" class="form-control" name="email" id="email" required/>
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label>Logradouro*</label>
+                                <input type="text" class="form-control" name="endereco" required />
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label>Telefone*</label>
+                                <input type="text" class="form-control" name="fone1" data-mask="phone" required />
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label>Telefone</label>
+                                <input type="text" class="form-control" name="fone2" data-mask="phone" />
+                            </div>
+                            <div class="form-group col-lg-12 text-right">
+                                <input type="checkbox" id="pes_status" name="status" checked />
+                                <label>Ativo</label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="pes_desfazer" class="text-center" data-toggle="tooltip" data-placement="bottom" title="Desfazer">
+                    <i class="fa fa-undo "></i>
+                </button>
+                <button class="text-center" data-toggle="tooltip" data-placement="bottom" title="Confirmar">
+                    <i class="fa fa-check "></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
