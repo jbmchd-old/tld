@@ -46,8 +46,16 @@ class LancamentosController extends GenericController
             $dados['dtainclusao'] = (new \DateTime())->format('Y-m-d H:m:i');
         }
         
-        $dados['precocusto'] = trim(str_replace(',', '.', str_replace('.', '', str_replace('R$', '', $dados['precocusto']))));
-        $dados['precovenda'] = trim(str_replace(',', '.', str_replace('.', '', str_replace('R$', '', $dados['precovenda']))));
+//        $dados['precocusto'] = trim(str_replace(',', '.', str_replace('.', '', str_replace('R$', '', $dados['precocusto']))));
+//        $dados['precovenda'] = trim(str_replace(',', '.', str_replace('.', '', str_replace('R$', '', $dados['precovenda']))));
+        
+        if(substr_count($dados['precocusto'], ',')>0){
+            $dados['precocusto'] = trim(str_replace(',', '.', str_replace('.', '', $dados['precocusto'])));
+        }
+                    
+        if(substr_count($dados['precovenda'], ',')>0){
+            $dados['precovenda'] = trim(str_replace(',', '.', str_replace('.', '', $dados['precovenda'])));
+        }
         
         try {
             $srv_pessoas = $this->app()->getEntity('Produtos');
