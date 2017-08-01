@@ -23,9 +23,14 @@ class LancamentosController extends GenericController {
         $dados = $request->getPost()->toArray();
         $dados['dtainclusao'] = (new \DateTime())->format('Y-m-d H:i:s');
         $dados['dtapagamento'] = ($dados['dtapagamento'])?$dados['dtapagamento']:null;
-        $dados['tipopagamento'] = ($dados['dtapagamento'])?$dados['tipopagamento']:null;
-        
-        
+//        $dados['tipopagamento'] = ($dados['dtapagamento'])?$dados['tipopagamento']:null;
+
+        if(substr_count($dados['valor'], ',')>0){
+            $dados['valor'] = str_replace(',', '.', str_replace('.', '', $dados['valor']));
+        }
+//        echo '<pre>';
+//        print_r($dados);
+//        die();
         $srv = $this->app()->getEntity('FinanLancamentos');
         $entity = $srv->create($dados);
 

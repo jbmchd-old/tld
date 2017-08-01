@@ -112,7 +112,8 @@ $(function () {
         var valor = $('#finan_lanc_valor').val();
         var situacao = $('#finan_lanc_situacao').prop('checked')?'P':'A';
         var dtapagamento = situacao=='P'?$('#finan_lanc_dtapagamento').val():null;
-        var tipopagamento = (dtapagamento)?$('#finan_lanc_tipopagamento :radio:checked').val():null;
+        var tipopagamento = $('#finan_lanc_tipopagamento :radio:checked').val();
+//        var tipopagamento = (dtapagamento)?$('#finan_lanc_tipopagamento :radio:checked').val():null;
         
         salvar(id, categoria, descricao, tipo, dtavencimento, valor, situacao, dtapagamento, tipopagamento);
         

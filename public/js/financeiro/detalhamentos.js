@@ -17,8 +17,6 @@ $(function () {
             }
         }).done(function(result){
             
-//            $('#finan_lanc_list_tb_desp tbody, #finan_lanc_list_tb_rec tbody').html('');
-            
             if(result.error > 1){
                 $('#finan_lanc_lancamentos_alertas').showMessageTarge({type: 'info', message: 'Nenhum resultado encontrado.'})
                 return false;
@@ -153,7 +151,7 @@ $(function () {
         return false;
     });
     
-    $('#finan_lanc_list_pesquisar').click(function (){
+    $('#finan_lanc_list_pesquisar, #finan_lanc_list_atualizartela').click(function (){
         buscarLancamentos();
     });
     
