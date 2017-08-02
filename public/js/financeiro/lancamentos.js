@@ -145,12 +145,7 @@ $(function () {
                 $('#finan_lanc_dtapagamento').val(result.dtapagamento==null?null:result.dtapagamento.split('-').reverse().join('/'));
             }
             
-            if(result.tipopagamento == 'AV'){
-                $('#finan_lanc_tipopagamento :radio[value="AV"]').prop('checked', true);
-            } else {
-                $('#finan_lanc_tipopagamento :radio[value="CH"]').prop('checked', true);
-            }
-            
+            $('#finan_lanc_tipopagamento :radio[value="'+result.tipopagamento+'"]').prop('checked', true);
             
             $('#finan_lanc_situacao').change();
             $('#finan_lanc_id').val(id);
