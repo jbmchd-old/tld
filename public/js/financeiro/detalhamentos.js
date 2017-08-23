@@ -155,6 +155,22 @@ $(function () {
         buscarLancamentos();
     });
     
+    $('#finan_lanc_list_imprimir').click(function (){
+        var dtainicio = $('#finan_lanc_pesq_inicio').val().split('/').reverse().join('-');
+        var dtafim = $('#finan_lanc_pesq_fim').val().split('/').reverse().join('-');
+        var cat = $('#finan_lanc_list_cat').val();
+        var cat_nome = $('#finan_lanc_list_cat option:selected').html();
+        var string = $('#finan_lanc_list_textopesquisar').val();
+        
+        var url = '/finan/detalhamentos/imprimir/'+dtainicio+'/'+dtafim+'/'+cat+'/'+cat_nome;
+        
+        if(string){url+='/'+string}
+        
+        window.open(url, '_blank');
+        
+        
+    });
+    
     $('#finan_lanc_list_textopesquisar').keypress(function (e){
         if(e.which == 13) { buscarLancamentos();}
     });

@@ -46,6 +46,16 @@ return [
                     ],
                 ],
             ],
+            'finan-imprimir' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/finan/detalhamentos/imprimir[/:inicio][/:fim][/:categoria_id][/:categoria_nome][/:string]',
+                    'defaults' => [
+                        'controller' => 'Financeiro\Controller\Detalhamentos',
+                        'action'     => 'imprimir',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [ 

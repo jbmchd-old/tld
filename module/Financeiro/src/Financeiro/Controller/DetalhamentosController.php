@@ -9,6 +9,7 @@
 namespace Financeiro\Controller;
 
 use Zend\View\Model\JsonModel;
+use Zend\View\Model\ViewModel;
 use Zf2ServiceBase\Controller\GenericController;
 
 class DetalhamentosController extends GenericController {
@@ -27,5 +28,16 @@ class DetalhamentosController extends GenericController {
 
         return new JsonModel($result);
     }
-    
+ 
+    public function imprimirAction(){
+        $dados['string'] = '';
+        $dados = array_merge($dados, $this->params()->fromRoute());
+        $srv = $this->app()->getEntity('VFinanLancamentos');
+        $result['lancamentos'] = $srv->buscaListagem($dados['inicio'], $dados['fim'].' 23:29:29',$dados['string'],$dados['categoria_id'])['table'];
+        $result['resumo'] = $srv->buscaListagemResumo($dados['inicio'], $dados['fim'].' 23:29:29',$dados['string'],$dados['categoria_id'])['table'][0];
+        return new ViewModel([
+            'result'=>$result,
+            'dados'=>$dados
+        ]);
+    }
 }
