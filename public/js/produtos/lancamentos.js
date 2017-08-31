@@ -51,7 +51,7 @@ $(function () {
             var table = $('#prod_tabela tbody');
             table.html('');
             $(result).each(function (i, cada) {
-                table.append('<tr data-id="' + cada.id + '" data-marca_id="' + cada.marca_id + '" data-veic_marca_id="' + cada.veic_marca_id + '"><td>' + cada.id + '</td><td>' + cada.marca + '</td><td>' + cada.categoria + '</td><td>' + cada.codigoauxiliar + '</td><td>' + cada.descricao + '</td><td>' + cada.quantidade + '</td><td>' + cada.unidade + '</td><td style="text-align:center"><button type="button"><i class="fa fa-edit"></i></button></td></tr>');
+                table.append('<tr data-id="' + cada.id + '" data-marca_id="' + cada.marca_id + '"><td>' + cada.id + '</td><td>' + cada.marca + '</td><td>' + cada.categoria + '</td><td>' + cada.codigoauxiliar + '</td><td>' + cada.descricao + '</td><td>' + cada.quantidade + '</td><td>' + cada.unidade + '</td><td style="text-align:center"><button type="button"><i class="fa fa-edit"></i></button></td></tr>');
             })
         });
     }
