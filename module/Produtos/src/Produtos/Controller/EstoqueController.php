@@ -49,16 +49,26 @@ class EstoqueController extends GenericController
             return false;
         }
         $dados = $request->getPost()->toArray();
-        
-        $columns = [];
-        if($dados['fornecedor_id']>0){$columns['fornecedor_id']=$dados['fornecedor_id'];}
-        if($dados['marca_id']>0){$columns['marca_id']=$dados['marca_id'];}
-        if($dados['categoria_id']>0){$columns['categoria_id']=$dados['categoria_id'];}
-        
         $srv = $this->app()->getEntity('VProdutos');
-        $prod = $srv->getAllByColumns($columns)['table'];
         
-        return new JsonModel($prod);
+        if(!$dados['fornecedor_id']>0 && !$dados['marca_id']>0 && !$dados['categoria_id']>0){
+            $prod = $srv->getAll()['table'];
+        } else {
+            $columns = [];
+            if($dados['fornecedor_id']>0){$columns['fornecedor_id']=$dados['fornecedor_id'];}
+            if($dados['marca_id']>0){$columns['marca_id']=$dados['marca_id'];}
+            if($dados['categoria_id']>0){$columns['categoria_id']=$dados['categoria_id'];}        
+            $prod = $srv->getAllByColumns($columns)['table'];
+        }
+        
+        
+        $datasource = [];
+        foreach ($prod as $produto) {
+            if($produto['quantidade'] < 1){continue;}
+            $datasource[] = $produto['id'] . ' - ' . ($produto['codigoauxiliar'] ? $produto['codigoauxiliar'] . ' - ' : '') . $produto['descricao'];
+        }
+
+        return new JsonModel(['produtos'=>$prod, 'autocomplete'=>$datasource]);
     }
     
     public function buscaProdutoAction() {

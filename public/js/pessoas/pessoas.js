@@ -122,7 +122,7 @@ $(function () {
         return false;
     });
 
-    $('.btn-app[data-title=Pessoas]').click(function () {
+    $('.open-app[data-title=Pessoas]').click(function () {
         buscaPessoas();
     });
 

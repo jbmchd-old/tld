@@ -5,10 +5,6 @@
     
     $total_itens = 0;
     
-//    echo '<pre>';
-//    print_r($os);
-//    die();
-        
 ?>
 <style>
     @page { margin: 0; }
@@ -113,7 +109,7 @@
 <div class="col-lg-12" id="os-main">
 
     <div class="col-lg-12 text-center bold border"> 
-        <div class="col-lg-12" style="font-size: 11px">DOCUMENTO NÃO-FISCAL</div>
+        <div class="col-lg-12" style="font-size: 11px">DOCUMENTO NÃO-FISCAL Nº <?= $os['id'] ?></div>
         <div class="col-lg-12" style="font-size: 13px"><?= $os['emp_fantasia'] ?> - <?= $os['emp_endereco'] ?></div>
         <div class="col-lg-12" style="font-size: 13px">Telefone(s): <?= $os['emp_fone1'] ?> / <?= $os['emp_fone2'] ?> CNPJ: <?= $os['emp_cnpj'] ?></div>
     </div>
@@ -183,34 +179,38 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><?= $total_itens ?></td>
+                    <td><?= sprintf("%.2f", $total_itens) ?></td>
                     <td>R$ <?= $os['precomaodeobra'] ?></td>
                     <td><?= $os['percdescmaodeobra'] ?>%</td>
-                    <td>R$ <?= $total_itens + $os['precomaodeobratotal'] ?></td>
+                    <td>R$ <?= sprintf("%.2f", $total_itens + $os['precomaodeobratotal']) ?></td>
                     <td><?= $os['formapagto'] ?></td>
                 </tr>
             </tbody>
         </table>
         
-        <div>Observações</div>
-        <textarea style="width: 100%" rows="2" placeholder="Observação"><?= $os['obs'] ?></textarea>
+        <div class="col-lg-8">
+            <div>Descrição</div>
+            <textarea class="col-lg-12" rows="3" placeholder="Descrição"><?= $os['descricao'] ?></textarea>
+        </div>
+        <div class="col-lg-4">
+            <div>Recebemos</div>
+            <textarea class="col-lg-12" rows="3" placeholder="Recebemos"></textarea>
+        </div>
         
         
     </div>
     
-    <div class="col-lg-6 " style="border: 1px solid #000; margin: 10px 0; height: 50px; left: 25%">
-        <span style="font-size: 10px">Recebemos</span>
+    <div class="col-lg-6 " style="margin: 10px 0; height: 10px; left: 25%">
+        <!--<span style="font-size: 10px">Recebemos</span>-->
     </div>
     
 </div>
 
-<div class="col-lg-12" style="border-bottom: 1px dashed; margin: 20px 0;">
-
-</div>
+<div class="col-lg-12" style="border-bottom: 1px dashed; margin: 20px 0;"></div>
 
 <div class="col-lg-12" id="os-main-copy"></div>
 
-<div style="text-align: center">
+<div style="text-align: center; margin-top: 15px">
     ________________________________ <br>
     <span class="capitalize">Assinatura</span>
 </div>

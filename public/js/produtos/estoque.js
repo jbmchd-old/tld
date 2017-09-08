@@ -4,7 +4,7 @@ $(function () {
         $.ajax({
             url: "/produtos/buscaFornecedores",
         }).done(function (result) {
-            $('#prod_est_forn_select, #prod_est_modal_forn_select').html('<option value="0">Selecione...</option>');
+            $('#prod_est_forn_select, #prod_est_modal_forn_select').html('<option value="0">Todas...</option>');
 
             $(result).each(function (i, cada) {
                 $('#prod_est_forn_select, #prod_est_modal_forn_select').append('<option value="' + cada.id + '">' + cada.nome_razao + '</option>');
@@ -16,7 +16,7 @@ $(function () {
         $.ajax({
             url: "/produtos/buscaCategorias",
         }).done(function (result) {
-            $('#prod_est_categoria_select, #prod_est_modal_categoria_select').html('<option value="0">Selecione...</option>');
+            $('#prod_est_categoria_select, #prod_est_modal_categoria_select').html('<option value="0">Todas...</option>');
             
             $(result).each(function (i, cada) {
                 $('#prod_est_categoria_select, #prod_est_modal_categoria_select').append('<option value="' + cada.id + '">' + cada.nome + '</option>');
@@ -29,7 +29,7 @@ $(function () {
             url: "/produtos/buscaMarcas",
             data: {fornecedor_id: fornecedor_id}
         }).done(function (result) {
-            $(destino).html('<option value="0">Selecione...</option>');
+            $(destino).html('<option value="0">Todas...</option>');
 
             $(result).each(function (i, cada) {
                 $(destino).append('<option value="' + cada.id + '">' + cada.nome + '</option>');
@@ -42,10 +42,11 @@ $(function () {
     }
     
     function buscaProdutos() {
-        
+        $('#prod_est_busca').val('');
         var fornecedor_id = $('#prod_est_forn_select').val();
         var marca_id = $('#prod_est_marca_select').val();
         var categoria_id = $('#prod_est_categoria_select').val();
+        var nome = $('#prod_est_busca').val();
         
         $.ajax({
             url: "/produtos/buscaProdutos",
@@ -53,15 +54,23 @@ $(function () {
                 fornecedor_id: fornecedor_id,
                 marca_id: marca_id,
                 categoria_id: categoria_id,
+                nome: nome,
             }
         }).done(function (result) {
             var table = $('#prod_est_tabela tbody');
             table.html('');
-            $(result).each(function (i, cada) {
+            $(result.produtos).each(function (i, cada) {
                 var categoria = $('#prod_est_categoria_select option[value="'+cada.categoria_id+'"]').html();
                 table
-                    .append('<tr data-id="'+cada.id+'" data-marca_id="'+cada.marca_id+'" data-veic_marca_id="'+cada.veic_marca_id+'"><td>'+cada.id+'</td><td>'+cada.marca+'</td><td>'+categoria+'</td><td>'+cada.codigoauxiliar+'</td><td>'+cada.descricao+'</td><td>'+cada.quantidade+'</td><td>'+cada.unidade+'</td><td>'+cada.espessura+'</td><td data-tipo="currency">'+cada.precocusto+'</td><td data-tipo="currency">'+cada.precovenda+'</td><td>'+cada.status+'</td><td>'+cada.obs+'</td><td style="text-align:center"><button type="button"><i class="fa fa-edit"></i></button></td></tr>');
-            })
+                    .append('<tr data-id="'+cada.id+'" data-marca_id="'+cada.marca_id+'"><td>'+cada.id+'</td><td>'+cada.marca+'</td><td>'+categoria+'</td><td>'+cada.codigoauxiliar+'</td><td data-name="descricao">'+cada.descricao+'</td><td>'+cada.quantidade+'</td><td>'+cada.unidade+'</td><td>'+cada.espessura+'</td><td data-tipo="currency">'+cada.precocusto+'</td><td data-tipo="currency">'+cada.precovenda+'</td><td>'+cada.status+'</td><td>'+cada.obs+'</td><td style="text-align:center"><button type="button"><i class="fa fa-edit"></i></button></td></tr>');
+            });
+            
+//            $("#prod_est_busca").autocomplete({
+//                source: result.autocomplete,
+//                minLength: 1,
+//                select: function( e, u ) {var string = u.item.value.split(' - ').pop(); filtraTabela(string)}
+//            });
+            
         });
     }
     
@@ -108,7 +117,23 @@ $(function () {
             $('#prod_status').prop('checked', true);
         });
     }
-
+    
+    function filtraTabela(string){
+        string = string.trim().toUpperCase();
+        
+        $('#prod_est_tabela tbody td[data-name=descricao]').each(function (key, td){
+            if($(td).html().trim().toUpperCase().indexOf(string)>-1){
+                $(td).parent().show();
+            } else {
+                $(td).parent().hide();
+            }
+        })
+    }
+    
+    $('#prod_est_busca').keyup(function (){
+        filtraTabela($(this).val());
+    });
+    
     $('#prod_est_forn_select').change(function () {
         var id = $(this).val();
         if (id > 0) {
@@ -196,7 +221,11 @@ $(function () {
     $('.open-app[data-title=ProdEst]').click(function () {
         buscaFornecedores();
         buscaCategorias();
+        buscaProdutos();
         limpaCampos();
     });
-//    
+    
+    $('#prod_est_form').submit(function (){
+        return false;
+    })
 });
