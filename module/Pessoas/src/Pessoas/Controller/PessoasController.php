@@ -55,7 +55,7 @@ class PessoasController extends GenericController {
         }
         $srv_tipos_doc = $this->app()->getEntity('Pessoas');
         
-        $tipos_doc = $srv_tipos_doc->getAll()['table'];
+        $tipos_doc = $srv_tipos_doc->getAllOrderByNomeRazao()['table'];
         return new JsonModel($tipos_doc);
     }
     
