@@ -1,4 +1,7 @@
 <?php 
+    
+    $base_teste_ativada = 1;
+    
     echo $this->doctype(); 
     $this->plugin('basePath')->setBasePath('/public/');
 ?>
@@ -42,9 +45,20 @@
 
     </head>
     <body>
+        
+        
+        <?php if($base_teste_ativada): ?>
+        <div class="container-fluid col-lg-12 text-center" style="top:300px; background: black">
+            <div style="color: orange; font-size: 50px"> TL Diesel </div>
+            <div style="color: orange; font-size: 25px"> Base teste inativada, acesse: tldiesel.com.br </div>
+        </div>
+        <?php else: ?>
+        
         <div style="height: 100%">
             <?php echo $this->content; ?>
         </div> <!-- /container -->
         <?php echo $this->inlineScript() ?>
+        
+        <?php endif; ?>
     </body>
 </html>
