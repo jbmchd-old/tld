@@ -1,0 +1,68 @@
+<?php
+$usuario = $this->sessao()->getArrayCopy()['usuario'];
+?>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="/public/js/bi/bi.js"></script>
+
+<div id="bi_janela" class="janela col-lg-push-2 col-lg-6" style="display: none" data-title="Bi">
+    <div class="divisao-janela">
+        <form method="POST" action="" id="bi_form">
+            <div class="modal-header">
+                <button type="button" data-toggle="tooltip" data-placement="bottom" title="Fechar">
+                    <i class="fa fa-close "></i>
+                </button>
+                <h4 class="modal-title"><i class="fa fa-wrench"></i> BI </h4>
+            </div>
+            <div class="modal-body clearfix" style="padding-bottom: 5px;">
+
+                <div id="bi_alertas" class="label label-default col-lg-12 hide"></div>
+
+                <div class="col-lg-6">
+                    <div class="col-lg-12" style="margin-bottom: 10px">
+                        <div class="form-group col-lg-5">
+                            <label>Início</label>
+                            <input class="form-control" id="bi_pesq_inicio" readonly />
+                        </div>
+
+                        <div class="form-group col-lg-5">
+                            <label>Fim</label>
+                            <input class="form-control" id="bi_pesq_fim" readonly />
+                        </div>
+                        
+                        <button type="button" id="bi_carregar" class="btn btn-default" style="margin-top: 20px"><i class="fa fa-refresh"></i></button>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div> 
+                        <span style="font-weight: bold">Lançamentos</span>
+                        <div>
+                            <input type="radio" name="bi_lanc_charttype" value="previsao" checked> Previsão
+                            <input type="radio" name="bi_lanc_charttype" value="fatreal"> Fat. Real
+                        </div>
+                        <div id="chart_lancamentos"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="bi_modal_grafdetalhamento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-l">
+            <form id="bi_modal_grafdet_form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-close "></i></button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit "></i> Detalhamento</h4>
+                </div>
+                <div class="modal-body clearfix">
+
+                    <div id="bi_modal_grafdet_alertas" class="label label-default col-lg-12 hide"></div>
+
+                    <div class="col-lg-12" id="bi_modal_grafdet_grafico"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

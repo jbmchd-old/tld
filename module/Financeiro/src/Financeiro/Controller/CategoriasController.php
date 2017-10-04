@@ -31,7 +31,7 @@ class CategoriasController extends GenericController {
             return false;
         }
 
-        $srv = $this->app()->getEntity('VFinanLancCategorias');
+        $srv = $this->app()->getEntity('VFinanCategorias');
         $result = $srv->getAll()['table'];
         
         return new JsonModel($result);
@@ -46,7 +46,7 @@ class CategoriasController extends GenericController {
 
         $dados = $request->getPost()->toArray();
         
-        $srv = $this->app()->getEntity('FinanLancCategoria');
+        $srv = $this->app()->getEntity('VFinanCategorias');
         $entity = $srv->create($dados);
         $result = $srv->save($entity);
         

@@ -1,10 +1,10 @@
 <?php
 
-namespace Financeiro\Entity;
+namespace Bi\Entity;
 
 use ZeDb\Entity;
 
-class VFinanLancCategorias extends Entity {
+class VBiGrafLancCategorias extends Entity {
     
     public function __call($name, $arguments) {
         $attr = lcfirst(substr($name, 3));

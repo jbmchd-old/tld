@@ -52,7 +52,7 @@ class VFinanLancamentos extends Model {
         
         $sql = "select b.nome, a.tipo, a.situacao, sum(a.valor) total
                 from {$this->tableName} a
-                left join finan_lanc_categoria b on b.id=a.categoria_id
+                left join finan_categorias b on b.id=a.categoria_id
                 where dtavencimento between '$data_inicio' and '$data_fim' and descricao like '%$string%' $categoria_sql
                 group by b.nome, a.tipo, a.situacao
                 order by b.nome, a.tipo desc, a.situacao";
@@ -67,7 +67,7 @@ class VFinanLancamentos extends Model {
         
         $sql = "select b.nome, a.tipo, a.situacao, sum(a.valor) total
                 from {$this->tableName} a
-                left join finan_lanc_categoria b on b.id=a.categoria_id
+                left join finan_categorias b on b.id=a.categoria_id
                 where dtavencimento between '$data_inicio' and '$data_fim' and descricao like '%$string%' $categoria_sql and a.tipopagamento='CH'
                 group by b.nome, a.tipo, a.situacao
                 order by b.nome, a.tipo desc, a.situacao";

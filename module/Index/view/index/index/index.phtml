@@ -25,8 +25,10 @@ $this->headMeta()->appendName('keywords', 'Sistema, Agendas');
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
             <ul class="nav navbar-nav col-lg-push-3" style="position: relative">
+                                
+                <li> <button type="button" class="btn btn-app" data-toggle="tooltip" data-placement="right" data-title="Bi" title="Bi"><i class="fa fa-line-chart fa-1x" aria-hidden="true"></i><br /><span>B.I.</span></button> </li>
                 
-                <li>
+                <li style="border-left: 1px solid #FF9900">
                     <div class="dropdown">
                         <button type="button" class="btn btn-app-dropdown" data-toggle="dropdown" data-placement="right"><i class="fa fa-money fa-1x" aria-hidden="true"></i><br /><span>Financeiro</span><span class="caret"> </span></button>
                         <ul class="dropdown-menu" aria-labelledby="dLabel">
@@ -88,5 +90,6 @@ $this->headMeta()->appendName('keywords', 'Sistema, Agendas');
     <?php echo $this->partial('telas/financeiro/lancamentos', ['variaveis' => $this->telas]) ?>
     <?php echo $this->partial('telas/financeiro/categorias', ['variaveis' => $this->telas]) ?>
     <?php echo $this->partial('telas/financeiro/detalhamentos', ['variaveis' => $this->telas]) ?>
+    <?php echo $this->partial('telas/bi/bi', ['variaveis' => $this->telas]) ?>
 
 </div>

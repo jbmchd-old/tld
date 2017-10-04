@@ -22,4 +22,5 @@ return [
     'Produtos',
     'Manutencao',
     'Financeiro',
+    'Bi',
 ];

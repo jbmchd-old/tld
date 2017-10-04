@@ -4,19 +4,22 @@
     $resumo = $this->result['resumo'];
     $dados = $this->dados;
 
-//    echo '<pre>';
-//    print_r($lancamentos);
-//    die();
-
-        
 ?>
 <style>
-    @page { margin: 0; }
+    
+    @page  
+    { 
+        size: auto;   /* auto is the initial value */ 
+        /* this affects the margin in the printer settings */ 
+        margin: 8.5mm 16mm 10mm 3mm; 
+    } 
+
     
     body{
         background: transparent;
         text-transform: uppercase;
         -webkit-print-color-adjust:exact;
+        margin: 0px;
     }
     .bold { font-weight: bold; }
     .border {
@@ -192,7 +195,7 @@
     
     <div class="col-lg-12" style="margin-top: 10px">
         <div class="col-lg-6">
-            <table class="table table-bordered table-condensed table-striped">
+            <table class="table table-bordered table-condensed table-striped" id="table-rec-principal">
                 <thead>
                     <tr>
                         <th colspan="6" >Receitas</th>
@@ -223,7 +226,7 @@
         </div>
         
         <div class="col-lg-6">
-            <table class="table table-bordered table-condensed table-striped">
+            <table class="table table-bordered table-condensed table-striped" id="table-des-principal">
                 <thead>
                     <tr>
                         <th colspan="6" >Despesas</th>
@@ -260,5 +263,13 @@
 </div>
 
 <script>
-    print();
+//    $(function (){
+//        var rec_tr_qtd = $('#table-rec-principal tbody tr').length;
+//        var des_tr_qtd = $('#table-rec-principal tbody tr').length;
+//        console.log(rec_tr_qtd);
+//        console.log(des_tr_qtd);
+//        if(rec_tr_qtd>85 || des_tr_qtd>85){ $('style').append('@media print { .page-break {page-break-after: always;} }'); }
+//        
+//    });
+        print();
 </script>

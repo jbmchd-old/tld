@@ -4,7 +4,7 @@ namespace Financeiro\Entity;
 
 use ZeDb\Entity;
 
-class FinanLancCategoria extends Entity {
+class VFinanCategorias extends Entity {
     
     public function __call($name, $arguments) {
         $attr = lcfirst(substr($name, 3));

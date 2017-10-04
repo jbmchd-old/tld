@@ -4,7 +4,7 @@ namespace Financeiro\Model;
 
 use ZeDb\Model;
 
-class FinanLancCategoria extends Model {
+class VFinanTodasCategorias extends Model {
     
     public function __construct($options = null) {
         $this->tableName = __CLASS__;
