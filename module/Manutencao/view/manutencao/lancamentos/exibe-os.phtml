@@ -5,6 +5,8 @@
     
     $total_itens = 0;
     
+    if( ! $os['kilometragem']>0){$os['kilometragem']='-';}
+    
 ?>
 <style>
     @page { margin: 0; }
@@ -31,7 +33,7 @@
     }
     * {
         font-family: 'Roboto', sans-serif;
-        font-size: small;
+        font-size: 15px;
         box-sizing: border-box;
     }
     .text-center { text-align: center }
@@ -40,7 +42,7 @@
     
     .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12
     { position: relative; min-height: 1px; padding-left: 5px; padding-right: 5px; }
-    .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12{ float: left; }
+    .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 { float: left; }
     .col-lg-1 { width: 8.33333333%; }
     .col-lg-2 { width: 16.66666667%; }
     .col-lg-3 { width: 25%; }
@@ -111,9 +113,9 @@
 <div class="col-lg-12" id="os-main">
 
     <div class="col-lg-12 text-center bold border"> 
-        <div class="col-lg-12" style="font-size: 11px">DOCUMENTO NÃO-FISCAL Nº <?= $os['id'] ?></div>
-        <div class="col-lg-12" style="font-size: 13px"><?= $os['emp_fantasia'] ?> - <?= $os['emp_endereco'] ?></div>
-        <div class="col-lg-12" style="font-size: 13px">Telefone(s): <?= $os['emp_fone1'] ?> / <?= $os['emp_fone2'] ?> CNPJ: <?= $os['emp_cnpj'] ?></div>
+        <div class="col-lg-12" style="font-size: 16px">DOCUMENTO NÃO-FISCAL Nº <?= $os['id'] ?> EMITIDO EM <?= (new \DateTime())->format('d/m/y H:i');?></div>
+        <div class="col-lg-12" style="font-size: 16px"><?= $os['emp_fantasia'] ?> - <?= $os['emp_endereco'] ?></div>
+        <div class="col-lg-12" style="font-size: 16px">Telefone(s): <?= $os['emp_fone1'] ?> / <?= $os['emp_fone2'] ?> CNPJ: <?= $os['emp_cnpj'] ?></div>
     </div>
     
     <div class="col-lg-12 border">
@@ -132,7 +134,7 @@
             <div class="col-lg-4 bold">Placa: </div><div class="col-lg-8"><?= $os['veic_placa'] ?></div>
             <div class="col-lg-4 bold">Ano: </div><div class="col-lg-8"><?= $os['veic_ano'] ?></div>
             <div class="col-lg-4 bold">Cor: </div><div class="col-lg-8"><?= $os['veic_cor'] ?></div>
-            <div class="col-lg-3 bold">Obs: </div><div class="col-lg-9 lowercase"><?= $os['veic_obs'] ?></div>
+            <div class="col-lg-4 bold">Km: </div><div class="col-lg-8"><?= $os['kilometragem'] ?></div>
         </div>
     </div>
     
@@ -183,8 +185,8 @@
                 <tr>
                     <td><?= sprintf("%.2f", $total_itens) ?></td>
                     <td>R$ <?= $os['precomaodeobra'] ?></td>
-                    <td><?= $os['percdescmaodeobra'] ?>%</td>
-                    <td>R$ <?= sprintf("%.2f", $total_itens + $os['precomaodeobratotal']) ?></td>
+                    <td><?= $os['percdesc'] ?>%</td>
+                    <td>R$ <?= sprintf("%.2f", ($total_itens + $os['precomaodeobra']) - (($total_itens + $os['precomaodeobra']) * $os['percdesc']) / 100) ?></td>
                     <td><?= $os['formapagto'] ?></td>
                 </tr>
             </tbody>

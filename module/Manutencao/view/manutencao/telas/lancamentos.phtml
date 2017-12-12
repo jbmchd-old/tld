@@ -28,13 +28,17 @@ $usuario = $this->sessao()->getArrayCopy()['usuario'];
 
                     <fieldset>
                         <legend class="clearfix" style="margin: 7px 0;">Ordem de Serviço: </legend>
-                        <div class="form-group col-lg-6" >
+                        <div class="form-group col-lg-5" >
                             <label>Cliente*</label>
                             <select class="form-control" name="cliente_id" id="manut_cli_select" required > <option>Selecione...</option> </select>
                         </div>
-                        <div class="form-group col-lg-6" >
+                        <div class="form-group col-lg-5" >
                             <label>Veículo*</label>
                             <select class="form-control" name="veiculo_id" id="manut_veic_select" required > <option>Selecione...</option> </select>
+                        </div>
+                        <div class="form-group col-lg-2" >
+                            <label>Kilometragem</label>
+                            <input type="text" class="form-control" name="kilometragem" id="manut_veic_km" />
                         </div>
                         <div class="form-group col-lg-12">
                             <label>Descrição geral</label>
@@ -69,34 +73,31 @@ $usuario = $this->sessao()->getArrayCopy()['usuario'];
                                 <tbody></tbody>
                             </table>
                         </div>
-                        <div class="form-group col-lg-2">
+                        <span class="form-group float-right">
+                            <label>Itens:</label><span id="manut_total_itens">0</span>
+                            <label>SubTotal:</label><span id="manut_subtotal_preco">0</span>
+                        </span>
+                        <div class="form-group col-lg-3">
                             <label>Mão de obra</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
                                 <input type="text" class="form-control" id="manut_mao_obra" value="0" data-filterinput='[0-9.]' />
                             </div>
                         </div>
-                        <div class="form-group col-lg-2">
-                            <label>Desconto.</label>
+                        <div class="form-group col-lg-3">
+                            <label>% Desconto</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-percent"></i></div>
-                                <input type="number" min="0" max="5" class="form-control" id="manut_mao_obra_perc_desc" value="0" />
+                                <input type="number" min="0" class="form-control" id="manut_perc_desc" value="0" />
                             </div>
                         </div>
-                        <div class="form-group col-lg-2">
-                            <label>Desc.</label>
+                        <div class="form-group col-lg-3">
+                            <label>Desconto OS</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
-                                <input class="form-control" id="manut_mao_obra_desc" value="0" disabled />
+                                <input class="form-control" id="manut_desc" value="0" disabled />
                             </div>
                         </div>
-                        <span class="form-group col-lg-2">
-                            <label>M.O. Total:</label><br />
-                            <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
-                                <input class="form-control" id="manut_mao_obra_total" value="0" disabled />
-                            </div>
-                        </span>
                     </fieldset>
                     <div class="col-lg-12 text-right">
                         <span class="form-group float-left col-lg-5 text-left">
@@ -116,15 +117,11 @@ $usuario = $this->sessao()->getArrayCopy()['usuario'];
                             </span>
                         </span>
                         <span class="form-group float-right">
-                            <label>Itens:</label><span id="manut_total_itens">0</span>
-                            <label>Total:</label><span id="manut_total_preco">R$ 0,0</span>
+                            <label>Total:</label><span id="manut_total_preco">0</span>
                         </span>
 
                     </div>
                     <div class="col-lg-12 text-center" >
-<!--                        <button type="button" id="manut_desfazer" class="text-center btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Desfazer">
-                            <i class="fa fa-undo"></i>
-                        </button>-->
                         <button class="text-center btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Confirmar">
                             <i class="fa fa-check" style="color:#cc7a00"></i>
                         </button>
@@ -132,22 +129,6 @@ $usuario = $this->sessao()->getArrayCopy()['usuario'];
 
                 </div>
                 <div class="col-lg-6">
-                    
-<!--                    <fieldset>
-                        <legend>Buscar:</legend>
-                        <div class="form-group col-lg-4" >
-                            <label>Id.</label>
-                            <input type="text" class="form-control" name="codigoauxiliar" id="manut_codauxiliar" />
-                        </div>
-                        <div class="form-group col-lg-4" >
-                            <label>OS</label>
-                            <input type="text" class="form-control" name="codigoauxiliar" id="manut_codauxiliar" />
-                        </div>
-                        <div class="form-group col-lg-4">
-                            <button type="button" id="manut_procurar" class="btn btn-default" style="margin-top: 20px"><i class="fa fa-search"></i></button>
-                        </div>
-                    </fieldset>-->
-                    
                     <fieldset>
                         <legend>Ordens de serviço:</legend>
                         <div class="col-lg-12" style="margin: 7px 0; max-height:400px; overflow:auto;">
@@ -198,13 +179,17 @@ $usuario = $this->sessao()->getArrayCopy()['usuario'];
 
                         <fieldset>
                             <legend class="clearfix" style="margin: 7px 0;">Ordem de Serviço: </legend>
-                            <div class="form-group col-lg-6" >
+                            <div class="form-group col-lg-5" >
                                 <label>Cliente*</label>
                                 <select class="form-control" name="cliente_id" id="manut_modal_cli_select" required > <option>Selecione...</option> </select>
                             </div>
-                            <div class="form-group col-lg-6" >
+                            <div class="form-group col-lg-5" >
                                 <label>Veículo*</label>
                                 <select class="form-control" name="veiculo_id" id="manut_modal_veic_select" required > <option>Selecione...</option> </select>
+                            </div>
+                            <div class="form-group col-lg-2" >
+                                <label>Kilometragem</label>
+                                <input type="text" class="form-control" name="kilometragem" id="manut_modal_veic_km" />
                             </div>
                             <div class="form-group col-lg-12">
                                 <label>Descrição do problema</label>
@@ -239,22 +224,22 @@ $usuario = $this->sessao()->getArrayCopy()['usuario'];
                                     <tbody></tbody>
                                 </table>
                             </div>
+                            <span class="form-group float-right">
+                                <label>Itens:</label><span id="manut_modal_total_itens">0</span>
+                                <label>SubTotal:</label><span id="manut_modal_subtotal_preco">0</span>
+                            </span>
                             <div class="form-group col-lg-2">
                                 <label>Mão de obra</label>
                                 <input type="text" class="form-control" id="manut_modal_mao_obra" value="0" data-filterinput='[0-9.]' />
                             </div>
                             <div class="form-group col-lg-2">
-                                <label>Desc.(%)</label>
-                                <input type="number" min="0" max="5" class="form-control" id="manut_modal_mao_obra_perc_desc" value="0" />
+                                <label>% Desconto</label>
+                                <input type="number" min="0" class="form-control" id="manut_modal_perc_desc" value="0" />
                             </div>
                             <div class="form-group col-lg-2">
-                                <label>Desc.</label>
-                                <input class="form-control" id="manut_modal_mao_obra_desc" value="0" disabled />
+                                <label>Desconto OS</label>
+                                <input class="form-control" id="manut_modal_desc" value="0" disabled />
                             </div>
-                            <span class="form-group col-lg-2">
-                                <label>M.O. Total:</label><br />
-                                <input class="form-control" id="manut_modal_mao_obra_total" value="0" disabled />
-                            </span>
                         </fieldset>
                         <div class="col-lg-12 text-right">
                             <span class="form-group float-left col-lg-3 text-left">
@@ -276,8 +261,7 @@ $usuario = $this->sessao()->getArrayCopy()['usuario'];
                                 </span>
                             </span>
                             <span class="form-group float-right">
-                                <label>Itens:</label><span id="manut_modal_total_itens">0</span>
-                                <label>Total:</label><span id="manut_modal_total_preco">R$ 0,0</span>
+                                <label>Total:</label><span id="manut_modal_total_preco">0,0</span>
                             </span>
 
                         </div>

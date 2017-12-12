@@ -30,7 +30,7 @@ class LancamentosController extends GenericController {
             $os_itens[$prod_id]['precototal'] = $os['prod_precototal'];
             $os_itens[$prod_id]['descricao'] = $os['prod_descricao'];
         }
-        
+
         return new ViewModel([
             'os'=>$result,
             'os_itens'=>$os_itens,
@@ -72,7 +72,33 @@ class LancamentosController extends GenericController {
         $srv = $this->app()->getEntity('VManutencaoItens');
         $result = $srv->getAllById($dados['id'])['table'];
 
-        return new JsonModel($result[0]);
+        $os = [];
+        foreach ($result as $cada) {
+            $os['id']=$cada['id'];
+            $os['empresa_id']=$cada['empresa_id'];
+            $os['funcionario_id']=$cada['funcionario_id'];
+            $os['cliente_id']=$cada['cliente_id'];
+            $os['veiculo_id']=$cada['veiculo_id'];
+            $os['ordemservico']=$cada['ordemservico'];
+            $os['descricao']=$cada['descricao'];
+            $os['dtainclusao']=$cada['dtainclusao'];
+            $os['precomaodeobra']=$cada['precomaodeobra'];
+            $os['percdesc']=$cada['percdesc'];
+            $os['formapagto']=$cada['formapagto'];
+            $os['dtaalteracao']=$cada['dtaalteracao'];
+            $os['obs']=$cada['obs'];
+            $os['empresa']=$cada['empresa'];
+            $os['funcionario']=$cada['funcionario'];
+            $os['cliente']=$cada['cliente'];
+            $os['placa']=$cada['placa'];
+            $os['produtos'][$cada['produto_id']]['produto_id']=$cada['produto_id'];
+            $os['produtos'][$cada['produto_id']]['produto']=$cada['produto'];
+            $os['produtos'][$cada['produto_id']]['quantidade']=$cada['quantidade'];
+            $os['produtos'][$cada['produto_id']]['precovenda_unit']=$cada['precovenda_unit'];
+            $os['produtos'][$cada['produto_id']]['precototal']=$cada['precototal'];
+            $os['produtos'][$cada['produto_id']]['produto']=$cada['produto'];
+        }
+        return new JsonModel($os);
     }
 
     public function buscaVeiculosAction() {
