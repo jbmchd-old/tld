@@ -35,6 +35,7 @@ $this->headMeta()->appendName('keywords', 'Sistema, Agendas');
                             <li class="open-app" data-title="FinanLanc" title="FinanLanc"><a href="#"><i class="fa fa-money fa-1x" aria-hidden="true"></i><span> Lançamentos</span></a></li>
                             <li class="open-app" data-title="FinanDet" title="FinanDet"><a href="#"><i class="fa fa-money fa-1x" aria-hidden="true"></i><span> Detalhamento</span></a></li>
                             <li class="open-app" data-title="FinanCategorias" title="FinanCategorias"><a href="#"><i class="fa fa-money fa-1x" aria-hidden="true"></i><span> Categorias</span></a></li>
+                            <li class="open-app" data-title="FinanCaixas" title="FinanCaixas"><a href="#"><i class="fa fa-money fa-1x" aria-hidden="true"></i><span> Caixas</span></a></li>
                         </ul>
                     </div>
                 </li>
@@ -89,6 +90,7 @@ $this->headMeta()->appendName('keywords', 'Sistema, Agendas');
     <?php echo $this->partial('telas/manutencao/lancamentos', ['variaveis' => $this->telas]) ?>
     <?php echo $this->partial('telas/financeiro/lancamentos', ['variaveis' => $this->telas]) ?>
     <?php echo $this->partial('telas/financeiro/categorias', ['variaveis' => $this->telas]) ?>
+    <?php echo $this->partial('telas/financeiro/caixas', ['variaveis' => $this->telas]) ?>
     <?php echo $this->partial('telas/financeiro/detalhamentos', ['variaveis' => $this->telas]) ?>
     <?php echo $this->partial('telas/bi/bi', ['variaveis' => $this->telas]) ?>
 

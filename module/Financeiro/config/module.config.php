@@ -36,6 +36,16 @@ return [
                     ],
                 ],
             ],
+            'finan-caixas' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/finan/caixas[/:action]',
+                    'defaults' => [
+                        'controller' => 'Financeiro\Controller\Caixas',
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
             'finan-detalhamento' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -60,9 +70,10 @@ return [
     ],
     'controllers' => [ 
         'invokables' => [ 
-            'Financeiro\Controller\Lancamentos' => 'Financeiro\Controller\LancamentosController',
-            'Financeiro\Controller\Categorias' => 'Financeiro\Controller\CategoriasController',
-            'Financeiro\Controller\Detalhamentos' => 'Financeiro\Controller\DetalhamentosController',
+            'Financeiro\Controller\Lancamentos'     => 'Financeiro\Controller\LancamentosController',
+            'Financeiro\Controller\Categorias'      => 'Financeiro\Controller\CategoriasController',
+            'Financeiro\Controller\Caixas'          => 'Financeiro\Controller\CaixasController',
+            'Financeiro\Controller\Detalhamentos'   => 'Financeiro\Controller\DetalhamentosController',
         ],
     ],
     'view_manager' => [
@@ -72,10 +83,10 @@ return [
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => [
-            'telas/financeiro/lancamentos'      => __DIR__ . '/../view/financeiro/telas/lancamentos.phtml',
-            'telas/financeiro/categorias'       => __DIR__ . '/../view/financeiro/telas/categorias.phtml',
-            'telas/financeiro/detalhamentos'    => __DIR__ . '/../view/financeiro/telas/detalhamentos.phtml',
-//            'telas/financeiro/sub-lancamentos' => __DIR__ . '/../view/financeiro/telas/subtelas/sub-lancamentos.phtml',
+            'telas/financeiro/lancamentos'  => __DIR__ . '/../view/financeiro/telas/lancamentos.phtml',
+            'telas/financeiro/caixas'       => __DIR__ . '/../view/financeiro/telas/caixas.phtml',
+            'telas/financeiro/categorias'   => __DIR__ . '/../view/financeiro/telas/categorias.phtml',
+            'telas/financeiro/detalhamentos'=> __DIR__ . '/../view/financeiro/telas/detalhamentos.phtml',
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',
