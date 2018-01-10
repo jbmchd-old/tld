@@ -13,13 +13,37 @@ use Zf2ServiceBase\Controller\GenericController;
 
 class CategoriasController extends GenericController {
     
-    public function buscaTodasCategoriasAction(){
+    public function buscaTodasCategoriasPaiAction(){
         $request = $this->getRequest();
         if (!$request->isPost()) {
             return false;
         }
 
-        $srv = $this->app()->getEntity('VFinanLancTodasCategorias');
+        $srv = $this->app()->getEntity('VFinanTodasCategoriaspai');
+        $result = $srv->getAll()['table'];
+        
+        return new JsonModel($result);
+    }
+    
+    public function buscaCategoriasPaiAction(){
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return false;
+        }
+
+        $srv = $this->app()->getEntity('VFinanCategoriaspai');
+        $result = $srv->getAll()['table'];
+        
+        return new JsonModel($result);
+    }
+    
+    public function buscaTodasCategoriasFilhosAction(){
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return false;
+        }
+
+        $srv = $this->app()->getEntity('VFinanTodasCategoriasfilhos');
         $result = $srv->getAll()['table'];
         
         return new JsonModel($result);
@@ -46,7 +70,7 @@ class CategoriasController extends GenericController {
 
         $dados = $request->getPost()->toArray();
         
-        $srv = $this->app()->getEntity('VFinanCategorias');
+        $srv = $this->app()->getEntity('FinanCategorias');
         $entity = $srv->create($dados);
         $result = $srv->save($entity);
         
