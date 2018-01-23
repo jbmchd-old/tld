@@ -7,13 +7,25 @@ $(function () {
         setDate:0,
     });
 
+    function buscaCaixas(){
+        $.ajax({
+            url: '/finan/caixas/buscaCaixas',
+        }).done(function (result) {
+            
+            $(result).each(function (i, cada){
+                $('#finan_lanc_caixas, #finan_lanc_importofx_caixas').append('<option value="'+cada.id+'">'+cada.nome+'</option>');
+            });
+            
+        });
+    }
+    
     function buscaCategorias(){
         $.ajax({
             url: '/finan/categorias/buscaCategorias',
         }).done(function (result) {
             
             $(result).each(function (i, cada){
-                $('#finan_lanc_cat, #finan_lanc_modal_cat').append('<option value="'+cada.id+'">'+cada.nome+'</option>');
+                $('#finan_lanc_cat, #finan_lanc_modal_cat, #finan_lanc_importofx_categorias').append('<option value="'+cada.id+'">'+cada.nome+'</option>');
             });
             
         });
@@ -29,7 +41,7 @@ $(function () {
                     <tr data-id="'+cada.id+'">\
                         <td>'+cada.id+'</td>\
                         <td>'+cada.descricao+'</td>\
-                        <td data-tipo="date">'+cada.dtainclusao+'</td>\
+                        <td data-tipo="date">'+cada.dtavencimento+'</td>\
                         <td><button class="btn btn-default"><i class="fa fa-edit"></i></button></td>\
                     </tr>'
                 );
@@ -159,6 +171,7 @@ $(function () {
     });
    
     $('.open-app[data-title=FinanLanc]').click(function (){
+        buscaCaixas();
         buscaCategorias();
         buscaUltimosLancamentos();
     });
@@ -172,4 +185,20 @@ $(function () {
             $(this).find('i').removeClass('fa-eye').addClass('fa-eye-slash');
         }
     });
+    
+    $('#finan_lanc_parcelar_btn').click(function (){
+        console.log('criar modal');
+    });
+    
+    //======== IMPORTACAO ==================================
+   
+    $('#finan_lanc_importofx_form').ajaxForm(function(result) { 
+        if( ! result.error){
+            $().alert({titulo:'Tudo certo!', texto: 'Arquivo importado com sucesso!<br /> '+result.registros+' inserido(s)'});
+        } else {
+            $().alert({titulo:'Problema!', texto: 'Ocorreu algum problema com a seguinte mensagem:<br /> '+result.message+''});
+        }
+    }); 
+    
+    
 });
