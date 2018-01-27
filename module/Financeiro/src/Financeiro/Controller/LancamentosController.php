@@ -25,22 +25,29 @@ class LancamentosController extends GenericController {
         }
 
         $dados = $request->getPost()->toArray();
-        $dados['dtainclusao'] = (new \DateTime())->format('Y-m-d H:i:s');
-        $dados['dtapagamento'] = ($dados['dtapagamento']) ? $dados['dtapagamento'] : null;
-//        $dados['tipopagamento'] = ($dados['dtapagamento'])?$dados['tipopagamento']:null;
-
-        if (substr_count($dados['valor'], ',') > 0) {
-            $dados['valor'] = str_replace(',', '.', str_replace('.', '', $dados['valor']));
+        foreach ($dados['parcelas'] as $num_parcela => $parcela) {
+            $dados['dtainclusao'] = (new \DateTime())->format('Y-m-d H:i:s');
+            
+            $dados['parcelas'][$num_parcela]['num'] = $num_parcela;
+//            $dados['parcelas'][$num_parcela]['dtapagamento'] = (strlen($parcela['dtapagamento'])) ? $parcela['dtapagamento'] : null;
+            
+            if(!strlen($parcela['dtapagamento'])){
+                $dados['parcelas'][$num_parcela]['situacao']='A';
+                unset($dados['parcelas'][$num_parcela]['dtapagamento']);
+            }
+            $dados['parcelas'][$num_parcela]['tipopagamento'] = $dados['tipopagamento'];
+            
+            if (substr_count($parcela['valor'], ',') > 0) {
+                $dados['parcelas'][$num_parcela]['valor'] = str_replace(',', '.', str_replace('.', '', $parcela['valor']));
+            }
         }
-//        echo '<pre>';
-//        print_r($dados);
-//        die();
+        unset($dados['tipopagamento']);
+        
         $srv = $this->app()->getEntity('FinanLancamentos');
-        $entity = $srv->create($dados);
+        $result = $srv->insereLancamentoParcelas([$dados]);
+        $result['registros'] = sizeof($dados);
 
-        $result = $srv->save($entity);
-
-        return new JsonModel(['ok' => is_object($result)]);
+        return new JsonModel($result);
     }
 
     public function buscaUltimosLancamentosAction() {
@@ -64,8 +71,23 @@ class LancamentosController extends GenericController {
 
         $srv = $this->app()->getEntity('VFinanLancamentos');
         $result = $srv->getAllById($dados['id'])['table'];
-
-        return new JsonModel($result[0]);
+        $array = [];
+        foreach ($result as $cada) {
+            $num_parc = $cada['num'];
+            $array['id'] = $cada['id'];
+            $array['caixa_id'] = $cada['caixa_id'];
+            $array['categoria_id'] = $cada['categoria_id'];
+            $array['descricao'] = $cada['descricao'];
+            $array['tipo'] = $cada['tipo'];
+            $array['parcelas'][$num_parc]['id'] = $cada['parcela_id'];
+            $array['parcelas'][$num_parc]['dtavencimento'] = $cada['dtavencimento'];
+            $array['parcelas'][$num_parc]['valor'] = $cada['valor'];
+            $array['parcelas'][$num_parc]['situacao'] = $cada['situacao'];
+            $array['parcelas'][$num_parc]['dtapagamento'] = $cada['dtapagamento'];
+            $array['parcelas'][$num_parc]['tipopagamento'] = $cada['tipopagamento'];
+        }
+        
+        return new JsonModel($array);
     }
 
     //======== IMPORTACAO ============
@@ -160,7 +182,6 @@ class LancamentosController extends GenericController {
         $xml = new \SimpleXMLElement($this->getOfxAsXML());
         return $xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->BANKACCTFROM;
     }
-
 
     private function getTransactions() {
         $xml = new \SimpleXMLElement($this->getOfxAsXML());

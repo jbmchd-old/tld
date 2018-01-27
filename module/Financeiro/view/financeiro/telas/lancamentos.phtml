@@ -24,7 +24,7 @@
         <div class="modal-body clearfix" style="padding-bottom: 5px;">
 
             <div id="finan_lanc_alertas" class="label label-default col-lg-12 hide"></div>
-            
+
             <form class="col-lg-12 clear-both" id="finan_lanc_importofx_form" method="post" action="/finan/lancamentos/importarOfx" style="padding: 10px 0; border-bottom: 1px solid #DDD;">
                 <div id="finan_lanc_importofx_alertas" class="label label-default col-lg-12 hide"></div>
 
@@ -47,25 +47,24 @@
                 </div>
 
             </form>
-            
-            <form class="col-lg-5 clear-both" method="POST" id="finan_lanc_form" style="margin-top: 10px;">
 
+            <form class="col-lg-7 clear-both" method="POST" id="finan_lanc_form" style="margin-top: 10px;">
                 <div class="col-lg-12">
                     <div>
                         <div class="form-group col-lg-6">
                             <label>Caixa *</label>
-                            <select class="form-control" id="finan_lanc_caixas"></select>
+                            <select class="form-control" name="caixa_id" id="finan_lanc_caixas"></select>
                         </div>
                         <div class="form-group col-lg-6">
                             <label>Categoria *</label>
-                            <select class="form-control" id="finan_lanc_cat"></select>
+                            <select class="form-control" name="categoria_id" id="finan_lanc_cat"></select>
                         </div>
                     </div>
 
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label>Descrição *</label>
-                            <input type="text" class="form-control" name="finan_lanc_descricao" id="finan_lanc_descricao" required />
+                            <input type="text" class="form-control" name="descricao" id="finan_lanc_descricao" required />
                         </div>
 
                         <div class="form-group col-lg-6" id="finan_lanc_tipo" style="margin-top: 20px">
@@ -84,12 +83,12 @@
 
                         <div class="form-group col-lg-4">
                             <label>Data</label>
-                            <input class="form-control" id="finan_lanc_dtavencimento" readonly />
+                            <input class="form-control" name="parcelas[1][dtavencimento]" id="finan_lanc_dtavencimento" readonly />
                         </div>
 
                         <div class="form-group col-lg-5">
                             <label>Valor</label>
-                            <input class="form-control" name="finan_lanc_valor" id="finan_lanc_valor" data-mask="money" required />
+                            <input class="form-control" name="parcelas[1][valor]" id="finan_lanc_valor" data-mask="money" required />
                         </div>
                     </div>
 
@@ -103,18 +102,19 @@
 
                     <div class="form-group col-lg-12" style="margin-top: 7px"> 
                         <div class="col-lg-2" style="margin-top: 2  px">
-                            <input type="checkbox" value="S" id="finan_lanc_situacao" /> Pago
+                            <input type="checkbox" value="P" name="parcelas[1][situacao]" id="finan_lanc_situacao" /> Pago
                         </div>
 
                         <div id="finan_lanc_pagamento" class="col-lg-6 finan_lanc_dtapagamento hide">
                             <label class="col-lg-3" style="margin-top: 7px">Data: </label>
                             <div class="form-group col-lg-8">
-                                <input class="form-control" id="finan_lanc_dtapagamento" readonly />
+                                <input class="form-control" name="parcelas[1][dtapagamento]" id="finan_lanc_dtapagamento" readonly />
                             </div>
                         </div>
                     </div>
 
-                    <input type="hidden" id="finan_lanc_id" />
+                    <input type="hidden" name="id" id="finan_lanc_id" />
+                    <input type="hidden" name="parcelas[1][id]" id="finan_lanc_parcela_id" />
                     <div class="col-lg-12 text-center" style="margin-top: 20px" >
                         <button class="text-center btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Confirmar">
                             <i class="fa fa-check" style="color:#cc7a00"></i>
@@ -123,7 +123,7 @@
                 </div>
             </form>
 
-            <div id="finan_lanc_ultlanc" class="col-lg-7" style="border-left: 1px solid #CCC; margin-top: 10px">
+            <div id="finan_lanc_ultlanc" class="col-lg-5" style="border-left: 1px solid #CCC; margin-top: 10px">
                 <label>Últimos Lançamentos</label>
                 <button type="button" id="finan_lanc_ultlanc_btn" class="btn btn-default btn-sm" style="margin: 5px"><i class="fa fa-eye"></i></button><br>
 
@@ -133,7 +133,6 @@
                             <tr>
                                 <th class="col-lg-1">#</th>
                                 <th>Descrição</th>
-                                <th class="col-lg-2">Inclusão</th>
                                 <th class="col-lg-1">Editar</th>
                             </tr>
                         </thead>
@@ -141,6 +140,108 @@
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="finan_lanc_parcelar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-large" role="document">
+        <div class="modal-content">
+            <form id="finan_lanc_parcelar_form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-close "></i></button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit "></i> Parcelar lançamento</h4>
+                </div>
+                <div class="modal-body clearfix">
+
+                    <div id="finan_lanc_parcelar_alertas" class="label label-default col-lg-12 hide"></div>
+
+                    <div class="col-lg-12">
+                        <div class="col-lg-12">
+                            <div class="form-group col-lg-6">
+                                <label>Caixa *</label>
+                                <select class="form-control" name="caixa_id" id="finan_lanc_parcelar_caixas"></select>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>Categoria *</label>
+                                <select class="form-control" name="categoria_id" id="finan_lanc_parcelar_cat"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="form-group col-lg-8">
+                                <label>Descrição *</label>
+                                <input type="text" class="form-control" name="descricao" id="finan_lanc_parcelar_descricao" required />
+                            </div>
+
+                            <div class="form-group col-lg-4" id="finan_lanc_parcelar_tipo">
+                                <label>Tipo de lançamento *</label><br>
+                                <input type="radio" value="D" name="tipo" checked /> Despesa
+                                <input type="radio" value="R" name="tipo" /> Receita
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-lg-9" id="finan_lanc_parcelar_tipopagamento" style="margin: 20px 0">
+                            <label>Tipo Pagamento</label><br />
+                            <input type="radio" value="AV" name="tipopagamento" checked /> A Vista
+                            <input type="radio" value="CH" name="tipopagamento" /> Cheque
+                            <input type="radio" value="BOL" name="tipopagamento" /> Boleto
+                            <input type="radio" value="CAR" name="tipopagamento" /> Cartão
+                        </div>
+
+                        <div class="col-lg-12" id="finan_lanc_parcelar_todasparcelas">
+                            <label>Parcelas *</label><br>
+
+                            <div class="col-lg-12">
+                                <button type="button" class="btn btn-default btn-sm" id="finan_lanc_parcelar_addparcela"><i class="fa fa-plus"></i></button>
+                                <button type="button" class="btn btn-default btn-sm" id="finan_lanc_parcelar_remparcela"><i class="fa fa-minus"></i></button>
+                            </div>
+
+                            <div class="col-lg-12" id="finan_lanc_parcelar_parcela1">
+                                <div class="form-group col-lg-3">
+                                    <label>Data</label>
+                                    <input class="form-control" name="parcelas[1][dtavencimento]" id="finan_lanc_parcelar_dtavencimento1" readonly />
+                                </div>
+
+                                <div class="form-group col-lg-3">
+                                    <label>Valor</label>
+                                    <input class="form-control" name="parcelas[1][valor]" id="finan_lanc_parcelar_valor1" data-mask="money" required />
+                                </div>
+                                <div class="form-group col-lg-2">
+                                    <label>Situação</label> <br />
+                                    <input type="checkbox" name="parcelas[1][situacao]" value="P" id="finan_lanc_parcelar_situacao1" /> Pago
+                                </div>
+
+                                <div id="finan_lanc_parcelar_pagamento1" class="col-lg-3 finan_lanc_parcelar_dtapagamento1 hide" style="margin-left: -30px">
+                                    <div class="form-group">
+                                        <label class="col-lg-12">Data: </label>
+                                        <input class="form-control" name="parcelas[1][dtapagamento]" id="finan_lanc_parcelar_dtapagamento1" readonly />
+                                    </div>
+                                </div>
+                                <input type="hidden" name="parcelas[1][id]" id="finan_lanc_parcelar_id1" />
+                            </div>
+
+                        </div>
+
+                        <input type="hidden" name="id" id="finan_lanc_parcelar_id" />
+                        
+                        <div class="col-lg-12 text-center" style="margin-top: 20px" >
+                            <button class="text-center btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Confirmar">
+                                <i class="fa fa-check" style="color:#cc7a00"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button id="finan_lanc_parcelar_confirmar" class="text-center" data-toggle="tooltip" data-placement="bottom" title="Confirmar">
+                        <i class="fa fa-check "></i>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

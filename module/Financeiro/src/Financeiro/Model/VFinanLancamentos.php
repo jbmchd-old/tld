@@ -13,7 +13,7 @@ class VFinanLancamentos extends Model {
     
     public function buscaUltimos(){
         
-        $sql = "select a.id, a.descricao, date(a.dtavencimento) dtavencimento from {$this->tableName} a order by dtavencimento desc limit 10";
+        $sql = "select distinct a.id, a.descricao from {$this->tableName} a order by dtaprincipal desc limit 10";
         return $this->executeSql($sql);
     }
     
