@@ -21,10 +21,10 @@ class DetalhamentosController extends GenericController {
         }
         $dados = $request->getPost()->toArray();
         $srv = $this->app()->getEntity('VFinanLancamentos');
-        $result['lancamentos'] = $srv->buscaListagem($dados['inicio'], $dados['fim'].' 23:29:29',$dados['string'],$dados['categoria_id'])['table'];
-        $result['resumo'] = $srv->buscaListagemResumo($dados['inicio'], $dados['fim'].' 23:29:29',$dados['string'],$dados['categoria_id'])['table'][0];
-        $result['categorias'] = $srv->buscaCategorias($dados['inicio'], $dados['fim'].' 23:29:29',$dados['string'],$dados['categoria_id'])['table'];
-        $result['cheques'] = $srv->buscaCheques($dados['inicio'], $dados['fim'].' 23:29:29',$dados['string'],$dados['categoria_id'])['table'];
+        $result['lancamentos'] = $srv->buscaListagem($dados['inicio'], $dados['fim'].' 23:29:29',$dados['string'],$dados['caixa_id'],$dados['categoria_id'])['table'];
+        $result['resumo'] = $srv->buscaListagemResumo($dados['inicio'], $dados['fim'].' 23:29:29',$dados['string'],$dados['caixa_id'],$dados['categoria_id'])['table'][0];
+        $result['categorias'] = $srv->buscaCategorias($dados['inicio'], $dados['fim'].' 23:29:29',$dados['string'],$dados['caixa_id'],$dados['categoria_id'])['table'];
+        $result['cheques'] = $srv->buscaCheques($dados['inicio'], $dados['fim'].' 23:29:29',$dados['string'],$dados['caixa_id'],$dados['categoria_id'])['table'];
 
         return new JsonModel($result);
     }

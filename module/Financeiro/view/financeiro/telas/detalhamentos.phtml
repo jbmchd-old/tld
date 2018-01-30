@@ -1,140 +1,172 @@
 
 <script type="text/javascript" src="/public/js/financeiro/detalhamentos.js"></script>
 
-<div id="finan_lanc_janela" class="janela col-lg-11" style="display: none" data-title="FinanDet">
+<div id="finan_det_janela" class="janela col-lg-11" style="display: none" data-title="FinanDet">
     <div class="divisao-janela">
-        <form id="finan_lanc_list_form">
-                <div class="modal-header">
-                    <button type="button" data-toggle="tooltip" data-placement="bottom" title="Fechar">
-                        <i class="fa fa-close "></i>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit "></i> Detalhamento</h4>
+        <form id="finan_det_list_form">
+            <div class="modal-header">
+                <button type="button" data-toggle="tooltip" data-placement="bottom" title="Fechar">
+                    <i class="fa fa-close "></i>
+                </button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit "></i> Detalhamento</h4>
+            </div>
+            <div class="modal-body clearfix">
+
+                <div id="finan_det_list_alertas" class="label label-default col-lg-12 hide"></div>
+
+                <div class="form-group col-lg-12" style="margin: 10px 0">
+                    <button type="button" class="btn btn-default btn-sm" id="finan_det_categorias_btn"><i class="fa fa-list-ol fa-1x"></i></button>
+                    <button type="button" class="btn btn-default btn-sm" id="finan_det_caixas_btn"><i class="fa fa-money fa-1x"></i></button>
                 </div>
-                <div class="modal-body clearfix">
 
-                    <div id="finan_lanc_list_alertas" class="label label-default col-lg-12 hide"></div>
-
-                    <div class="col-lg-12" style="margin-bottom: 10px">
+                <div class="col-lg-12" style="margin-bottom: 10px">
+                    <div>                            
                         <div class="form-group col-lg-2">
                             <label>Início</label>
-                            <input class="form-control" id="finan_lanc_pesq_inicio" readonly />
+                            <input class="form-control" id="finan_det_pesq_inicio" readonly />
                         </div>
 
                         <div class="form-group col-lg-2">
                             <label>Fim</label>
-                            <input class="form-control" id="finan_lanc_pesq_fim" readonly />
+                            <input class="form-control" id="finan_det_pesq_fim" readonly />
                         </div>
-                        
+                    </div>
+
+                    <div>                            
+                        <div class="form-group col-lg-2">
+                            <label>Caixa</label>
+                            <select id="finan_det_list_caixas" class="form-control"><option value="0">Todos</option></select>
+                        </div>
+
                         <div class="form-group col-lg-2">
                             <label>Categoria</label>
-                            <!--<input class="form-control" id="finan_lanc_pesq_fim" readonly />-->
-                            <select id="finan_lanc_list_cat" class="form-control"><option value="0">Todas</option></select>
+                            <select id="finan_det_list_cat" class="form-control"><option value="0">Todas</option></select>
                         </div>
 
                         <div class="col-lg-3">
-                            <label class="control-label" for="finan_lanc_list_textopesquisar">Buscar</label>
-                            <input type="text" class="form-control" id="finan_lanc_list_textopesquisar">
+                            <label class="control-label" for="finan_det_list_textopesquisar">Buscar</label>
+                            <input type="text" class="form-control" id="finan_det_list_textopesquisar">
                         </div>
-                        <button type="button" id="finan_lanc_list_pesquisar" class="btn btn-default" style="margin-top: 20px"><i class="fa fa-search"></i></button>
-                        <button type="button" id="finan_lanc_list_atualizartela" class="btn btn-default" style="margin-top: 20px"><i class="fa fa-refresh"></i></button>
-                        <button type="button" id="finan_lanc_list_imprimir" class="btn btn-default" style="margin-top: 20px"><i class="fa fa-print"></i></button>
+                        <button type="button" id="finan_det_list_pesquisar" class="btn btn-default" style="margin-top: 20px"><i class="fa fa-search"></i></button>
+                        <button type="button" id="finan_det_list_imprimir" class="btn btn-default" style="margin-top: 20px"><i class="fa fa-print"></i></button>
                     </div>
-                    
-                    <div class="col-lg-12">
-                        <div class="col-lg-3">
-                            <label>Categorias</label>
-                            <button type="button" id="finan_lanc_list_tb_resumo_cat_btn" class="btn btn-default btn-sm" style="margin: 5px"><i class="fa fa-eye"></i></button>
-                            <table class="table table-bordered table-condensed table-striped hide" id="finan_lanc_list_tb_resumo_cat">
-                                <thead>
-                                    <tr>
-                                        <th>Nome</th>
-                                        <th class="col-lg-1">Tipo</th>
-                                        <th class="col-lg-1">Situação</th>
-                                        <th class="col-lg-1">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
-                        
-                        <div class="col-lg-3">
-                            <label>Cheques</label>
-                            <button type="button" id="finan_lanc_list_tb_resumo_cheques_btn" class="btn btn-default btn-sm" style="margin: 5px"><i class="fa fa-eye"></i></button>
-                            <table class="table table-bordered table-condensed table-striped hide" id="finan_lanc_list_tb_resumo_cheques">
-                                <thead>
-                                    <tr>
-                                        <th>Nome</th>
-                                        <th class="col-lg-1">Tipo</th>
-                                        <th class="col-lg-1">Situação</th>
-                                        <th class="col-lg-1">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-6" style="max-height: 400px; overflow: auto;">
-                        <table class="table table-bordered table-condensed table-striped" id="finan_lanc_list_tb_rec">
-                            <thead>
-                                <tr>
-                                    <th colspan="9" class="col-lg-1">Receitas</th>
-                                </tr>
-                                <tr>
-                                    <th class="col-lg-1">#</th>
-                                    <th>Descrição</th>
-                                    <th class="col-lg-1">Valor</th>
-                                    <th class="col-lg-1">Categoria</th>
-                                    <th class="col-lg-1">Sit.</th>
-                                    <th class="col-lg-1">Vencimento</th>
-                                    <th class="col-lg-1">Pagto</th>
-                                    <th class="col-lg-1">Tipo Pagto</th>
-                                    <th class="col-lg-1">Editar</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
+                </div>
 
-                    <div class="col-lg-6" style="max-height: 400px; overflow: auto;">
-                        <table class="table table-bordered table-condensed table-striped" id="finan_lanc_list_tb_desp">
-                            <thead>
-                                <tr>
-                                    <th colspan="9" class="col-lg-1">Despesas</th>
-                                </tr>
-                                <tr>
-                                    <th class="col-lg-1">#</th>
-                                    <th>Descrição</th>
-                                    <th class="col-lg-1">Valor</th>
-                                    <th class="col-lg-1">Categoria</th>
-                                    <th class="col-lg-1">Sit.</th>
-                                    <th class="col-lg-1">Vencimento</th>
-                                    <th class="col-lg-1">Pagto</th>
-                                    <th class="col-lg-1">Tipo Pagto</th>
-                                    <th class="col-lg-1">Editar</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                    
+                <div class="col-lg-6" style="max-height: 400px; overflow: auto;">
+                    <table class="table table-bordered table-condensed table-striped" id="finan_det_list_tb_rec">
+                        <thead>
+                            <tr>
+                                <th colspan="9" class="col-lg-1">Receitas</th>
+                            </tr>
+                            <tr>
+                                <th class="col-lg-1">#</th>
+                                <th>Descrição</th>
+                                <th class="col-lg-1">Valor</th>
+                                <th class="col-lg-1">Categoria</th>
+                                <th class="col-lg-1">Sit.</th>
+                                <th class="col-lg-1">Vencimento</th>
+                                <th class="col-lg-1">Pagto</th>
+                                <th class="col-lg-1">Tipo Pagto</th>
+                                <th class="col-lg-1">Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
-                <div class="modal-footer" style="padding: 6px 5px 0 0 ">
-                        <label style="color: blue">RECEITAS: </label>
-                        <label>a receber:</label><span id="finan_lanc_list_total_rec_receber"> R$ 1535.15</span> + 
-                        <label>caixa:</label><span id="finan_lanc_list_total_rec_caixa"> R$ 5135.05</span> 
-                        <label>=</label><span id="finan_lanc_list_total_rec"> R$ 5135.05</span> 
-                        | 
-                        <label style="color: red">DESPESAS: </label>
-                        <label>a pagar:</label><span id="finan_lanc_list_total_desp_pagar"> R$ 1535.15</span> +
-                        <label>pagas:</label><span id="finan_lanc_list_total_desp_paga"> R$ 1535.15</span>  
-                        <label>=</label><span id="finan_lanc_list_total_desp"> R$ 1535.15</span>
-                        | 
-                        <label>CAIXA:</label> <span id="finan_lanc_list_caixa_rec">15</span><span id="finan_lanc_list_caixa_desp">11</span> = <span id="finan_lanc_list_caixa_total">15</span> | 
-                        <label>Dízimo:</label> <span id="finan_lanc_list_dizimo">10 </span>
+
+                <div class="col-lg-6" style="max-height: 400px; overflow: auto;">
+                    <table class="table table-bordered table-condensed table-striped" id="finan_det_list_tb_desp">
+                        <thead>
+                            <tr>
+                                <th colspan="9" class="col-lg-1">Despesas</th>
+                            </tr>
+                            <tr>
+                                <th class="col-lg-1">#</th>
+                                <th>Descrição</th>
+                                <th class="col-lg-1">Valor</th>
+                                <th class="col-lg-1">Categoria</th>
+                                <th class="col-lg-1">Sit.</th>
+                                <th class="col-lg-1">Vencimento</th>
+                                <th class="col-lg-1">Pagto</th>
+                                <th class="col-lg-1">Tipo Pagto</th>
+                                <th class="col-lg-1">Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
-            </form>
+
+            </div>
+            <div class="modal-footer" style="padding: 6px 5px 0 0 ">
+                <label style="color: blue">RECEITAS: </label>
+                <label>a receber:</label><span id="finan_det_list_total_rec_receber"> R$ 1535.15</span> + 
+                <label>caixa:</label><span id="finan_det_list_total_rec_caixa"> R$ 5135.05</span> 
+                <label>=</label><span id="finan_det_list_total_rec"> R$ 5135.05</span> 
+                | 
+                <label style="color: red">DESPESAS: </label>
+                <label>a pagar:</label><span id="finan_det_list_total_desp_pagar"> R$ 1535.15</span> +
+                <label>pagas:</label><span id="finan_det_list_total_desp_paga"> R$ 1535.15</span>  
+                <label>=</label><span id="finan_det_list_total_desp"> R$ 1535.15</span>
+                | 
+                <label>CAIXA:</label> <span id="finan_det_list_caixa_rec">15</span><span id="finan_det_list_caixa_desp">11</span> = <span id="finan_det_list_caixa_total">15</span> | 
+                <label>Dízimo:</label> <span id="finan_det_list_dizimo">10 </span>
+            </div>
+        </form>
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="finan_det_resumocat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-close "></i></button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-list-ol "></i> Resumo categorias</h4>
+            </div>
+            <div class="modal-body clearfix">
+                <div id="finan_det_resumocat_alertas" class="label label-default col-lg-12 "></div>
+                <div class="col-lg-3">
+                    <table class="table table-bordered table-condensed table-striped " id="finan_det_list_tb_resumo_cat">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th class="col-lg-1">Tipo</th>
+                                <th class="col-lg-1">Situação</th>
+                                <th class="col-lg-1">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Modal -->
+<div class="modal fade" id="finan_det_resumocheques" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-close "></i></button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-money "></i> Resumo cheques</h4>
+            </div>
+            <div class="modal-body clearfix">
+                <div id="finan_det_resumocheques_alertas" class="label label-default col-lg-12 "></div>
+                <div class="col-lg-3">
+                    <table class="table table-bordered table-condensed table-striped " id="finan_det_list_tb_resumo_cheques">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th class="col-lg-1">Tipo</th>
+                                <th class="col-lg-1">Situação</th>
+                                <th class="col-lg-1">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
