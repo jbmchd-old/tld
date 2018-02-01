@@ -22,7 +22,7 @@ class VFinanLancamentos extends Model {
         $caixa_sql = ($caixa_id>0)?" and caixa_id=$caixa_id":'';
         $categoria_sql = ($categoria_id>0)?" and categoria_id=$categoria_id":'';
         
-        $sql = "select * from {$this->tableName} where dtaprincipal between '$data_inicio' and '$data_fim' and descricao like '%$string%' $caixa_sql $categoria_sql order by dtavencimento";
+        $sql = "select * from {$this->tableName} where dtaprincipal between '$data_inicio' and '$data_fim' and descricao like '%$string%' $caixa_sql $categoria_sql order by dtaprincipal";
         return $this->executeSql($sql);
         
     }
@@ -39,8 +39,8 @@ class VFinanLancamentos extends Model {
                     (select ifnull(sum(valor),0) from {$this->tableName} where tipo='D' and situacao='A' and descricao like '%$string%' and dtaprincipal between '$data_inicio' and '$data_fim' $caixa_sql $categoria_sql) 'despesa_pagar',
                     (select ifnull(sum(valor),0) from {$this->tableName} where tipo='D' and situacao='P' and descricao like '%$string%' and dtaprincipal between '$data_inicio' and '$data_fim' $caixa_sql $categoria_sql) 'despesa_paga',
 
-                    ((select ifnull(sum(valor),0) from {$this->tableName} where tipo='R' and situacao='P' and descricao like '%$string%' and dtaprincipal between '$data_inicio' and '$data_fim' $caixa_sql $categoria_sql)- (select ifnull(sum(valor),0) from {$this->tableName} where tipo='D' and situacao='P' and descricao like '%$string%' and dtavencimento between '$data_inicio' and '$data_fim' $caixa_sql $categoria_sql)) 'caixa_total',
-                    round((((select ifnull(sum(valor),0) from {$this->tableName} where tipo='R' and situacao='P' and descricao like '%$string%' and dtaprincipal between '$data_inicio' and '$data_fim' $caixa_sql $categoria_sql)- (select ifnull(sum(valor),0) from {$this->tableName} where tipo='D' and situacao='P' and descricao like '%$string%' and dtavencimento between '$data_inicio' and '$data_fim' $caixa_sql $categoria_sql))*10)/100,2) 'dizimo'
+                    ((select ifnull(sum(valor),0) from {$this->tableName} where tipo='R' and situacao='P' and descricao like '%$string%' and dtaprincipal between '$data_inicio' and '$data_fim' $caixa_sql $categoria_sql)- (select ifnull(sum(valor),0) from {$this->tableName} where tipo='D' and situacao='P' and descricao like '%$string%' and dtaprincipal between '$data_inicio' and '$data_fim' $caixa_sql $categoria_sql)) 'caixa_total',
+                    round((((select ifnull(sum(valor),0) from {$this->tableName} where tipo='R' and situacao='P' and descricao like '%$string%' and dtaprincipal between '$data_inicio' and '$data_fim' $caixa_sql $categoria_sql)- (select ifnull(sum(valor),0) from {$this->tableName} where tipo='D' and situacao='P' and descricao like '%$string%' and dtaprincipal between '$data_inicio' and '$data_fim' $caixa_sql $categoria_sql))*10)/100,2) 'dizimo'
                     
                 FROM dual";
 
