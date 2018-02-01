@@ -1,8 +1,10 @@
 //======== COMPARTILHADA ==================================
+var finan_lanc_tela_origem = '';
+var finan_lanc_tela_origem_id = 0;
+var finan_lanc_tela_destino_result = {};
 
 function finan_lanc_carregalancamento(id, origem) {
-
-    if(origem = 'detalhamentos'){
+    if(['detalhamentos','manutencao'].indexOf(origem)){
         $('.open-app[data-title=FinanLanc]').click();
     }
     
@@ -217,6 +219,8 @@ $(function () {
                 cada.value = cada.value.length > 0 ? cada.value.split('/').reverse().join('-') : null;
             }
         })
+        
+        array.push({name:'tela_origem[nome]',value:finan_lanc_tela_origem},{name:'tela_origem[id]', value:finan_lanc_tela_origem_id});
 
         $.ajax({
             url: '/finan/lancamentos/salvar',
@@ -230,6 +234,10 @@ $(function () {
             $('#finan_lanc_alertas').showMessageTarge({type: 'success', message: 'Operação realizada com sucesso.'})
             buscaUltimosLancamentos();
             limpaCamposJanela();
+            
+            if(result.hasOwnProperty('manutencao') && result['manutencao'].hasOwnProperty('id')){
+                finan_lanc_tela_destino_result=result['manutencao'];
+            }
         });
         return false;
     });

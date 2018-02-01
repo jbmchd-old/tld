@@ -16,12 +16,14 @@ class FinanLancamentos extends Model {
         $this->beginTransaction();
         
         $result = [];
+        $lanc_id = null;
         foreach ($lancamentos as $lanc) {
             $parcelas = $lanc['parcelas'];
             unset($lanc['parcelas']);
             $result = $this->insereLancamento($lanc);
             
             if ($result['id']>0) {
+                $lanc_id = $result['id'];
                 $result = $this->insereParcelas($parcelas, $result['id']);
                 if($result['error']){
                     $this->rollback();
@@ -32,8 +34,9 @@ class FinanLancamentos extends Model {
                 return $result;
             }    
         }
-        
         $this->commit();
+        
+        $result['lanc_id'] = $lanc_id;
         return $result;   
     }
     
@@ -44,24 +47,32 @@ class FinanLancamentos extends Model {
 
     public function insereParcelas(array $parcelas, $lancamento_id){
         $result = [];
+
+        $sql = "DELETE FROM finan_lanc_parcelas WHERE lancamentos_id=$lancamento_id"; 
+        $result = $this->executeSql($sql);
+        if($result['error']){
+            return $result;
+        }
+        
         foreach ($parcelas as $parcela) {
             $parcela['lancamentos_id']=$lancamento_id;
             $parcela_id = $parcela['id'];
             unset($parcela['id']);
             
-            if($parcela_id>0){
-                $array_aux = [];
-                foreach ($parcela as $column => $value) {
-                    $array_aux[] = "$column='$value'";
-                }
-                $sql = "UPDATE finan_lanc_parcelas SET ". implode(',', $array_aux)." WHERE id=$parcela_id"; 
-                $result = $this->executeSql($sql);
-            } else {
-                $columns = implode(",", array_keys($parcela));
-                $values = "'".implode("','", $parcela)."'";
-                $sql = "INSERT INTO finan_lanc_parcelas ($columns) VALUES ($values)";
-                $result = $this->executeSql($sql);
-            }
+            $columns = implode(",", array_keys($parcela));
+            $values = "'".implode("','", $parcela)."'";
+            $sql = "INSERT INTO finan_lanc_parcelas ($columns) VALUES ($values)";
+            $result = $this->executeSql($sql);
+            
+//            if($parcela_id>0){
+//                $array_aux = [];
+//                foreach ($parcela as $column => $value) {
+//                    $array_aux[] = "$column='$value'";
+//                }
+//                $sql = "UPDATE finan_lanc_parcelas SET ". implode(',', $array_aux)." WHERE id=$parcela_id"; 
+//                $result = $this->executeSql($sql);
+//            } else {
+//            }
             
             if($result['error']){break;}
         }

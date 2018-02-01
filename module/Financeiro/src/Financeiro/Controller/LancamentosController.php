@@ -25,11 +25,12 @@ class LancamentosController extends GenericController {
         }
 
         $dados = $request->getPost()->toArray();
+        $tela_origem = $dados['tela_origem'];
+        
         foreach ($dados['parcelas'] as $num_parcela => $parcela) {
             $dados['dtainclusao'] = (new \DateTime())->format('Y-m-d H:i:s');
             
             $dados['parcelas'][$num_parcela]['num'] = $num_parcela;
-//            $dados['parcelas'][$num_parcela]['dtapagamento'] = (strlen($parcela['dtapagamento'])) ? $parcela['dtapagamento'] : null;
             
             if(!strlen($parcela['dtapagamento'])){
                 $dados['parcelas'][$num_parcela]['situacao']='A';
@@ -42,11 +43,25 @@ class LancamentosController extends GenericController {
             }
         }
         unset($dados['tipopagamento']);
+        unset($dados['tela_origem']);
         
         $srv = $this->app()->getEntity('FinanLancamentos');
         $result = $srv->insereLancamentoParcelas([$dados]);
+        
+        switch ($tela_origem['nome']){
+            case 'manutencao':
+                $os_id = $tela_origem['id'];
+                $srv = $this->app()->getEntity('Manutencao','Manutencao');
+                
+                $os = $srv->getById($os_id)['table']->toArray();
+                $os['lancamento_id']=$result['lanc_id'];
+                
+                $entity = $srv->create($os);
+                $result['manutencao'] = $srv->save($entity)->toArray();
+        }
+        
         $result['registros'] = sizeof($dados);
-
+        
         return new JsonModel($result);
     }
 

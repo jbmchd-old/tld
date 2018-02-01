@@ -28,6 +28,11 @@ $usuario = $this->sessao()->getArrayCopy()['usuario'];
 
                     <fieldset>
                         <legend class="clearfix" style="margin: 7px 0;">Ordem de Serviço: </legend>
+                        
+                        <div class="form-group col-lg-12" >
+                            <label>OS:</label><label id="manut_tipo_os"><i> (Nova) </i></label><button type="button" id="manut_nova_os" class="btn btn-default btn-sm" style="margin-left: 5px">Nova OS</button>
+                        </div>
+                        
                         <div class="form-group col-lg-5" >
                             <label>Cliente*</label>
                             <select class="form-control" name="cliente_id" id="manut_cli_select" required > <option>Selecione...</option> </select>
@@ -81,14 +86,14 @@ $usuario = $this->sessao()->getArrayCopy()['usuario'];
                             <label>Mão de obra</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
-                                <input type="text" class="form-control" id="manut_mao_obra" value="0" data-filterinput='[0-9.]' />
+                                <input type="text" class="form-control" name="precomaodeobra" id="manut_mao_obra" value="0" data-filterinput='[0-9.]' />
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
                             <label>% Desconto</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-percent"></i></div>
-                                <input type="number" min="0" class="form-control" id="manut_perc_desc" value="0" />
+                                <input type="number" name="percdesc" min="0" class="form-control" id="manut_perc_desc" value="0" />
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -99,34 +104,18 @@ $usuario = $this->sessao()->getArrayCopy()['usuario'];
                             </div>
                         </div>
                     </fieldset>
-                    <div class="col-lg-12 text-right">
-                        <span class="form-group float-left col-lg-5 text-left">
-                            <label>Forma pagamento:</label>
-                            <br />
-                            <span class="form-group ">
-                                <input type="radio" id="" name="formapagto" value="VISTA" checked />
-                                <span>À Vista</span>
-                            </span>
-                            <span class="form-group ">
-                                <input type="radio" id="" name="formapagto" value="CHEQUE" />
-                                <span>Cheque</span>
-                            </span>
-                            <span class="form-group ">
-                                <input type="radio" id="" name="formapagto" value="CARTAO" />
-                                <span>Cartão</span>
-                            </span>
+                    
+                    <input type="hidden" class="form-control" id="manut_id" name="id" />
+                        <span class="form-group float-right col-lg-2">
+                            <label>Total:</label>
+                            <!--<span id="manut_total_preco">0</span>-->
+                            <input type="text" name="precototal" id="manut_total_preco" class="form-control" readonly />
                         </span>
-                        <span class="form-group float-right">
-                            <label>Total:</label><span id="manut_total_preco">0</span>
-                        </span>
-
-                    </div>
                     <div class="col-lg-12 text-center" >
                         <button class="text-center btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Confirmar">
                             <i class="fa fa-check" style="color:#cc7a00"></i>
                         </button>
                     </div>
-
                 </div>
                 <div class="col-lg-6">
                     <fieldset>
@@ -136,12 +125,12 @@ $usuario = $this->sessao()->getArrayCopy()['usuario'];
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th class="col-lg-1">Número</th>
                                         <th class="col-lg-1">Veículo</th>
                                         <th>Descrição</th>
                                         <th class="col-lg-2">Data</th>
                                         <th class="col-lg-1"><i class="fa fa-print"></i></th>
                                         <th class="col-lg-1"><i class="fa fa-edit"></i></th>
+                                        <th class="col-lg-1"><i class="fa fa-money"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -151,129 +140,5 @@ $usuario = $this->sessao()->getArrayCopy()['usuario'];
                 </div>
             </div>
         </form>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="manut_modal_manut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content modal-l">
-            <form id="manut_modal_form">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-close "></i></button>
-                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit "></i> Alterar</h4>
-                </div>
-                <div class="modal-body clearfix">
-
-                    <div id="manut_modal_alertas" class="label label-default col-lg-12 hide"></div>
-
-                    <div class="col-lg-12">
-                        
-                        <fieldset style="margin-top: 13px">
-                            <div class="col-lg-6" >
-                                <span>Vendedor: </span><label id="manut_modal_vendedor"><?= $usuario['nome_razao'] ?></label>
-                            </div>
-                        </fieldset>
-
-                        <hr />
-
-                        <fieldset>
-                            <legend class="clearfix" style="margin: 7px 0;">Ordem de Serviço: </legend>
-                            <div class="form-group col-lg-5" >
-                                <label>Cliente*</label>
-                                <select class="form-control" name="cliente_id" id="manut_modal_cli_select" required > <option>Selecione...</option> </select>
-                            </div>
-                            <div class="form-group col-lg-5" >
-                                <label>Veículo*</label>
-                                <select class="form-control" name="veiculo_id" id="manut_modal_veic_select" required > <option>Selecione...</option> </select>
-                            </div>
-                            <div class="form-group col-lg-2" >
-                                <label>Kilometragem</label>
-                                <input type="text" class="form-control" name="kilometragem" id="manut_modal_veic_km" />
-                            </div>
-                            <div class="form-group col-lg-12">
-                                <label>Descrição do problema</label>
-                                <textarea id="manut_modal_descricao" name="descricao" class="form-control" ></textarea>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend class="clearfix" style="margin: 7px 0;">Itens: </legend>
-                            <div class="form-group col-lg-9">
-                                <label>Buscar produto</label>
-                                <input type="text" class="form-control" id="manut_modal_prod" />
-                            </div>
-                            <div class="form-group col-lg-2">
-                                <label>Quant.</label>
-                                <input type="number" min="1" class="form-control" id="manut_modal_prod_qtd" value="1"/>
-                            </div>
-                            <div class="form-group col-lg-1 text-center" style="margin-top: 20px">
-                                <button type="button" class="btn btn-default" id="manut_modal_prod_add"><i class="fa fa-plus-circle"></i></button>
-                            </div>
-                            <div class="col-lg-12" style="overflow: auto; max-height: 161px; margin-bottom: 10px; border: 1px solid silver;">
-                                <table id="manut_modal_tab_produtos" class="table table-bordered table-condensed ">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Descrição</th>
-                                            <th>Qtd.</th>
-                                            <th>Unit.</th>
-                                            <th>Total</th>
-                                            <th class="col-lg-1">Rem.</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-                            <span class="form-group float-right">
-                                <label>Itens:</label><span id="manut_modal_total_itens">0</span>
-                                <label>SubTotal:</label><span id="manut_modal_subtotal_preco">0</span>
-                            </span>
-                            <div class="form-group col-lg-2">
-                                <label>Mão de obra</label>
-                                <input type="text" class="form-control" id="manut_modal_mao_obra" value="0" data-filterinput='[0-9.]' />
-                            </div>
-                            <div class="form-group col-lg-2">
-                                <label>% Desconto</label>
-                                <input type="number" min="0" class="form-control" id="manut_modal_perc_desc" value="0" />
-                            </div>
-                            <div class="form-group col-lg-2">
-                                <label>Desconto OS</label>
-                                <input class="form-control" id="manut_modal_desc" value="0" disabled />
-                            </div>
-                        </fieldset>
-                        <div class="col-lg-12 text-right">
-                            <span class="form-group float-left col-lg-3 text-left">
-                                <label>Forma pagamento:</label>
-                                <br />
-                                <span class="form-group ">
-                                    <input type="radio" name="formapagto" value="VISTA" checked />
-                                    <span>À Vista</span>
-                                </span>
-                                <br />
-                                <span class="form-group ">
-                                    <input type="radio" name="formapagto" value="CHEQUE" />
-                                    <span>Cheque</span>
-                                </span>
-                                <br />
-                                <span class="form-group ">
-                                    <input type="radio" name="formapagto" value="CARTAO" />
-                                    <span>Cartão</span>
-                                </span>
-                            </span>
-                            <span class="form-group float-right">
-                                <label>Total:</label><span id="manut_modal_total_preco">0,0</span>
-                            </span>
-
-                        </div>
-                        <div class="col-lg-12 text-center" >
-                            <button class="text-center btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Confirmar">
-                                <i class="fa fa-check" style="color:#cc7a00"></i>
-                            </button>
-                        </div>
-                        <input type="hidden" class="form-control" id="manut_modal_id" name="id" />
-                    </div>
-                </div>
-            </form>
-        </div>
     </div>
 </div>

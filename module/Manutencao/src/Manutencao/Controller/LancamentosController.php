@@ -79,12 +79,13 @@ class LancamentosController extends GenericController {
             $os['funcionario_id']=$cada['funcionario_id'];
             $os['cliente_id']=$cada['cliente_id'];
             $os['veiculo_id']=$cada['veiculo_id'];
+            $os['lancamento_id']=$cada['lancamento_id'];
             $os['ordemservico']=$cada['ordemservico'];
             $os['descricao']=$cada['descricao'];
             $os['dtainclusao']=$cada['dtainclusao'];
             $os['precomaodeobra']=$cada['precomaodeobra'];
             $os['percdesc']=$cada['percdesc'];
-            $os['formapagto']=$cada['formapagto'];
+            $os['precototalos']=$cada['precototalos'];
             $os['dtaalteracao']=$cada['dtaalteracao'];
             $os['obs']=$cada['obs'];
             $os['empresa']=$cada['empresa'];
@@ -150,11 +151,8 @@ class LancamentosController extends GenericController {
         if (!$request->isPost()) {
             return false;
         }
-
         $dados = $request->getPost()->toArray();
-        $produtos = $dados['produtos'];
-        unset($dados['produtos']);
-
+        
         $dados['empresa_id'] = $this->sessao()->getArrayCopy('usuario')['empresa_id'];
         $dados['funcionario_id'] = $this->sessao()->getArrayCopy('usuario')['pessoas_id'];
         $dados['ordemservico'] = 'OS' . (new \DateTime())->format('ymdHis');
@@ -165,54 +163,12 @@ class LancamentosController extends GenericController {
             $dados['dtainclusao'] = (new \DateTime())->format('Y-m-d H:i:s');
         }
         
-        try {
+        unset($dados['cliente_id']);
+        /* salva manutencao */
+        $srv_manut = $this->app()->getEntity('Manutencao');
+        $result = $srv_manut->salvaManutencaoProdutos($dados);
 
-            /* salva manutencao */
-            $srv_manut = $this->app()->getEntity('Manutencao');
-            $entity = $srv_manut->create($dados);
-            $os = $srv_manut->save($entity);
-
-            if (sizeof($produtos)) {
-                $os = $os->toArray();
-
-                $srv_manut_itens = $this->app()->getEntity('ManutencaoItens');
-                $srv_manut_itens->removeByManutencaoId($os['id']);
-
-                foreach ($produtos as $produto) {
-                    /* busca cada item da manutencao */
-                    $srv = $this->app()->getEntity('Produtos', 'Produtos');
-                    $prod_estoque = $srv->getAllById($produto['produto_id'])['table'][0];
-                    
-                    $produto = [
-                        'id' => null,
-                        'manutencao_id' => $os['id'],
-                        'produto_id' => $produto['produto_id'],
-                        'quantidade' => $produto['quantidade'],
-                        'precocusto_unit' => $prod_estoque['precocusto'],
-                        'precovenda_unit' => $prod_estoque['precovenda'],
-                        'precototal' => $prod_estoque['precovenda'] * $produto['quantidade'],
-                    ];
-
-                    /* salva o produto para manutencao */
-                    $entity = $srv_manut_itens->create($produto);
-                    $result = $srv_manut_itens->save($entity);
-                    
-                    /* atualiza estoque */
-                    $srv_estoque = $this->app()->getEntity('Produtos', 'Produtos');
-                    $prod_estoque['quantidade'] = $prod_estoque['quantidade']-$produto['quantidade'];
-                    $entity = $srv_estoque->create($prod_estoque);
-                    $result = $srv_estoque->save($entity);
-                }
-            }
-            
-            return new JsonModel(['ok' => $os['id']>0]);
-            
-        } catch (Exception $exc) {
-            echo $exc->getTraceAsString();
-        }
-
-        return new JsonModel(['ok' => false]);
-        
+        return new JsonModel($result);
     }
 
 }
