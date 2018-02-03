@@ -1,17 +1,94 @@
 <?php
 
-    $os = $this->os[0];
-    $os_itens = $this->os_itens;
-    
-    $total_itens = 0;
-    
-    if( ! $os['kilometragem']>0){$os['kilometragem']='-';}
-    
+setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'PTB');
+
+function valorPorExtenso($valor = 0, $bolExibirMoeda = false, $bolPalavraFeminina = false) {
+
+    $singular = null;
+    $plural = null;
+
+    if ($bolExibirMoeda) {
+        $singular = array("centavo", "real", "mil", "milhão", "bilhão", "trilhão", "quatrilhão");
+        $plural = array("centavos", "reais", "mil", "milhões", "bilhões", "trilhões", "quatrilhões");
+    } else {
+        $singular = array("", "", "mil", "milhão", "bilhão", "trilhão", "quatrilhão");
+        $plural = array("", "", "mil", "milhões", "bilhões", "trilhões", "quatrilhões");
+    }
+
+    $c = array("", "cem", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos");
+    $d = array("", "dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa");
+    $d10 = array("dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezesete", "dezoito", "dezenove");
+    $u = array("", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove");
+
+
+    if ($bolPalavraFeminina) {
+
+        if ($valor == 1) {
+            $u = array("", "uma", "duas", "três", "quatro", "cinco", "seis", "sete", "oito", "nove");
+        } else {
+            $u = array("", "um", "duas", "três", "quatro", "cinco", "seis", "sete", "oito", "nove");
+        }
+
+
+        $c = array("", "cem", "duzentas", "trezentas", "quatrocentas", "quinhentas", "seiscentas", "setecentas", "oitocentas", "novecentas");
+    }
+
+
+    $z = 0;
+
+    $valor = number_format($valor, 2, ".", ".");
+    $inteiro = explode(".", $valor);
+
+    for ($i = 0; $i < count($inteiro); $i++) {
+        for ($ii = mb_strlen($inteiro[$i]); $ii < 3; $ii++) {
+            $inteiro[$i] = "0" . $inteiro[$i];
+        }
+    }
+
+    // $fim identifica onde que deve se dar junção de centenas por "e" ou por "," ;)
+    $rt = null;
+    $fim = count($inteiro) - ($inteiro[count($inteiro) - 1] > 0 ? 1 : 2);
+    for ($i = 0; $i < count($inteiro); $i++) {
+        $valor = $inteiro[$i];
+        $rc = (($valor > 100) && ($valor < 200)) ? "cento" : $c[$valor[0]];
+        $rd = ($valor[1] < 2) ? "" : $d[$valor[1]];
+        $ru = ($valor > 0) ? (($valor[1] == 1) ? $d10[$valor[2]] : $u[$valor[2]]) : "";
+
+        $r = $rc . (($rc && ($rd || $ru)) ? " e " : "") . $rd . (($rd && $ru) ? " e " : "") . $ru;
+        $t = count($inteiro) - 1 - $i;
+        $r .= $r ? " " . ($valor > 1 ? $plural[$t] : $singular[$t]) : "";
+        if ($valor == "000")
+            $z++;
+        elseif ($z > 0)
+            $z--;
+
+        if (($t == 1) && ($z > 0) && ($inteiro[0] > 0))
+            $r .= ( ($z > 1) ? " de " : "") . $plural[$t];
+
+        if ($r)
+            $rt = $rt . ((($i > 0) && ($i <= $fim) && ($inteiro[0] > 0) && ($z < 1)) ? ( ($i < $fim) ? ", " : " e ") : " ") . $r;
+    }
+
+    $rt = mb_substr($rt, 1);
+
+    return($rt ? trim($rt) : "zero");
+}
+
+$os = $this->os[0];
+$os_itens = $this->os_itens;
+$os_finan = $this->os_financeiro;
+
+$total_itens = 0;
+
+if (!$os['kilometragem'] > 0) {
+    $os['kilometragem'] = '-';
+}
 ?>
+
 <style>
     @page { margin: 0; }
-    
-    body{
+
+    body:not(#manut_os_promissorias *){
         background: transparent;
         text-transform: uppercase;
     }
@@ -25,7 +102,7 @@
     .capitalize { text-transform: capitalize; }
 
     /* BOOTSTRAP - INICIO */
-    
+
     *:before, *:after {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
@@ -39,7 +116,7 @@
     .text-center { text-align: center }
     .text-right { text-align: right; }
     .text-left { text-align: left; }
-    
+
     .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12
     { position: relative; min-height: 1px; padding-left: 5px; padding-right: 5px; }
     .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 { float: left; }
@@ -51,6 +128,7 @@
     .col-lg-6 { width: 50%; }
     .col-lg-8 { width: 66.66666667%; }
     .col-lg-9 { width: 75%; }
+    .col-lg-10 { width: 83.33333333%; }
     .col-lg-12 { width: 100%; }
     table {
         border-collapse: collapse;
@@ -63,7 +141,7 @@
         margin-bottom: 7px;
     }
     .table-bordered { border: 1px solid #ddd; }
- 
+
     td, th {
         padding: 0;
     }
@@ -105,19 +183,39 @@
     }
 
     /* BOOTSTRAP - FIM */
-/*        @media print {
-            .page-break {page-break-after: always;}
-        }*/
+    
+    .manut_os_promissorias *{font-size: 13px;}
+    .manut_os_promissoria {border:2px solid #000; border-radius: 10px; width: 760px; height: 300px}
+    .manut_os_promissoria_avalistas {transform: rotate(-90deg);top: 52%; position: relative; margin: 5px 0}
+    .manut_os_promissoria_dados {position: relative; margin: 5px 0}
+    .manut_os_promissoria_vencimento {position: absolute; left: 450px}
+    .manut_os_promissoria_num_valor {position: absolute;top: 30px;font-weight: bold;}
+    .manut_os_promissoria_num_valor * {font-size: 17px;}
+    .manut_os_promissoria_num, .manut_os_promissoria_valor {border: 2px solid;padding: 4px;border-radius: 6px;}
+    .manut_os_promissoria_descricao {position: absolute; top: 60px; line-height: 22px; }
+    .manut_os_promissoria_valor_extenso {position: absolute; top: 110px; line-height: 22px; }
+    .manut_os_promissoria_praca {position: absolute; top: 157px; line-height: 25px; }
+    .manut_os_promissoria_emissao, .manut_os_promissoria_assinatura {position: absolute; top: 179px; text-align: center;}
+    .manut_os_promissoria_emissao * {padding: 0}
+    .manut_os_promissoria_emissao span:nth-child(odd) {position: relative; top: 8px}
+    .manut_os_promissoria_emissao span:nth-child(even) {left: -100px; position: relative; top: 6px}
+    .manut_os_promissoria_emissao > div {display: block; line-height: 10px; margin-bottom: 5px}
+    .manut_os_promissoria_assinatura {top: 190px; left: 314px; line-height: 18px; }
+    
+    @media print { .page-break_promissoria {page-break-after: always;} }
+    /*        @media print {
+                .page-break {page-break-after: always;}
+            }*/
 </style>
 
 <div class="col-lg-12" id="os-main">
 
     <div class="col-lg-12 text-center bold border"> 
-        <div class="col-lg-12" style="font-size: 16px">DOCUMENTO NÃO-FISCAL Nº <?= $os['id'] ?> EMITIDO EM <?= (new \DateTime())->format('d/m/y H:i');?></div>
+        <div class="col-lg-12" style="font-size: 16px">DOCUMENTO NÃO-FISCAL Nº <?= $os['id'] ?> EMITIDO EM <?= (new \DateTime($os['dtainclusao']))->format('d/m/y H:i'); ?></div>
         <div class="col-lg-12" style="font-size: 16px"><?= $os['emp_fantasia'] ?> - <?= $os['emp_endereco'] ?></div>
         <div class="col-lg-12" style="font-size: 16px">Telefone(s): <?= $os['emp_fone1'] ?> / <?= $os['emp_fone2'] ?> CNPJ: <?= $os['emp_cnpj'] ?></div>
     </div>
-    
+
     <div class="col-lg-12 border">
         <div class="col-lg-8">
             <div class="col-lg-12 text-center bold">Cliente</div>
@@ -137,9 +235,9 @@
             <div class="col-lg-4 bold">Km: </div><div class="col-lg-8"><?= $os['kilometragem'] ?></div>
         </div>
     </div>
-    
+
     <div class="col-lg-12 border">
-        
+
         <table class="table table-bordered table-condensed table-striped">
             <thead>
                 <tr>
@@ -155,30 +253,30 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($os_itens as $item) : $total_itens+=$item['precototal']; ?>
-                <tr>
-                    <td class="col-lg-1"><?= $item['id'] ?></td>
-                    <td class="col-lg-4"><?= $item['descricao'] ?></td>
-                    <td class="col-lg-1"><?= $item['quant'] ?></td>
-                    <td class="col-lg-2">R$ <?= $item['precovenda'] ?></td>
-                    <td class="col-lg-2">R$ <?= $item['precototal'] ?></td>
-                    <td class="col-lg-2"><?= $os['func_nome'] ?></td>
-                </tr>
-                <?php endforeach; ?>
+<?php foreach ($os_itens as $item) : $total_itens += $item['precototal']; ?>
+                    <tr>
+                        <td class="col-lg-1"><?= $item['id'] ?></td>
+                        <td class="col-lg-4"><?= $item['descricao'] ?></td>
+                        <td class="col-lg-1"><?= $item['quant'] ?></td>
+                        <td class="col-lg-2">R$ <?= $item['precovenda'] ?></td>
+                        <td class="col-lg-2">R$ <?= $item['precototal'] ?></td>
+                        <td class="col-lg-2"><?= $os['func_nome'] ?></td>
+                    </tr>
+<?php endforeach; ?>
             </tbody>
         </table>
 
         <table class="table table-bordered table-condensed table-striped">
             <thead>
                 <tr>
-                    <th colspan="5">Pagamento</th>
+                    <th colspan="5">Orçamento</th>
                 </tr>
                 <tr>
                     <th>Sub Total</th>
                     <th>Mão de Obra</th>
                     <th>Desconto (%)</th>
                     <th>Total</th>
-                    <th>Tipo</th>
+                    <th>Forma Pagto</th>
                 </tr>
             </thead>
             <tbody>
@@ -187,11 +285,40 @@
                     <td>R$ <?= $os['precomaodeobra'] ?></td>
                     <td><?= $os['percdesc'] ?>%</td>
                     <td>R$ <?= sprintf("%.2f", ($total_itens + $os['precomaodeobra']) - (($total_itens + $os['precomaodeobra']) * $os['percdesc']) / 100) ?></td>
-                    <td><?= $os['formapagto'] ?></td>
+                    <td><?= $os_finan['formapagto'] ?></td>
                 </tr>
             </tbody>
         </table>
-        
+
+<?php if (strlen($os_finan['descricao'])): ?>
+            <table class="table table-bordered table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="3">Pagamento</th>
+                    </tr>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Parcela</th>
+                        <th>Vencimento</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="vertical-align: middle" rowspan="<?= sizeof($os_finan['parcelas']) + 1 ?>"><?= $os_finan['descricao'] ?></td>
+                    </tr>
+    <?php foreach ($os_finan['parcelas'] as $num => $parcela) : ?>
+                        <tr>
+
+                            <td><?= $num ?></td>
+                            <td><?= (new \DateTime($parcela['dtavencimento']))->format('d/m/Y') ?></td>
+                            <td><?= $parcela['valor'] ?></td>
+                        </tr>
+    <?php endforeach; ?>
+                </tbody>
+            </table>
+<?php endif; ?>
+
         <div class="col-lg-8">
             <div>Descrição</div>
             <textarea class="col-lg-12" rows="3" placeholder="Descrição"><?= $os['descricao'] ?></textarea>
@@ -200,36 +327,87 @@
             <div>Recebemos</div>
             <textarea class="col-lg-12" rows="3" placeholder="Recebemos"></textarea>
         </div>
-        
-        
+
+
     </div>
-    
+
     <div class="col-lg-6 " style="margin: 10px 0; height: 10px; left: 25%">
         <!--<span style="font-size: 10px">Recebemos</span>-->
     </div>
-    
-</div>
-<div class="page-break"></div>
 
+</div>
+<div class="page-break1"></div>
 <div class="col-lg-12" style="border-bottom: 1px dashed; margin: 20px 0;"></div>
 
 
 <div class="col-lg-12" id="os-main-copy"></div>
 
-<div style="text-align: center; margin-top: 15px">
+<div style="text-align: center; margin: 10px 0">
     ________________________________ <br>
     <span class="capitalize">Assinatura</span>
 </div>
 
+<div class="page-break2"></div>
+<div class="col-lg-12" style="border-bottom: 1px dashed; margin: 5px 0;"></div>
+
+<div class="col-lg-12" id="manut_os_promissorias">
+<?php if (strlen($os_finan['descricao'])): $promissoria_num=1; foreach ($os_finan['parcelas'] as $num => $parcela) : $obj_dtavencimento = (new \DateTime($parcela['dtavencimento']))?>
+    
+        <div class="manut_os_promissoria col-lg-12" style="margin-bottom: 2px">
+            <span class="manut_os_promissoria_avalistas col-lg-2" style="">
+                Avalista(s) 
+                <br><br>
+                ________________________________
+                <br>
+                CPF/CNPJ 
+                <br><br>
+                ________________________________
+                <br>
+                CPF/CNPJ
+                <br>
+            </span>        
+            <div class="manut_os_promissoria_dados col-lg-10" style="">
+                <div class="manut_os_promissoria_vencimento" style="">Vencimento:<?= (new \DateTime($parcela['dtavencimento']))->format('d/m/Y') ?></div>
+                <div class="manut_os_promissoria_num_valor col-lg-12" style="">
+                    <span style="">Nº <span class="manut_os_promissoria_num"><?= str_pad($os['id'], 6, 0, STR_PAD_LEFT); echo (sizeof($os_finan['parcelas']) > 1) ? "-$num" : '';?> </span></span>
+                    <span style="right: 20px; position: absolute;">R$ <span class="manut_os_promissoria_valor"><?= str_replace('.', ',', $parcela['valor']) ?></span></span>
+                </div>
+                <div class="manut_os_promissoria_descricao col-lg-12" class="">Ao(s) <b><?= valorPorExtenso($obj_dtavencimento->format('d'))?>(s) do mês <?= utf8_encode(strftime(' de %B de ', strtotime($obj_dtavencimento->format('m/d/Y')))); ?> <?= valorPorExtenso($obj_dtavencimento->format('Y'))?> </b> pagarei por esta única via de <b>NOTA PROMISSÓRIA</b> a <b><?= $os['emp_razaosocial'] ?></b> CPF/CPNJ <b><?= $os['emp_cnpj'] ?></b> </div>
+                <div class="manut_os_promissoria_valor_extenso col-lg-12" class="">Ou a sua ordem, a quantia de <b><?= valorPorExtenso($parcela['valor'],true) ?></b> em moeda corrente deste país</div>
+                <div class="manut_os_promissoria_praca col-lg-12" class="">Pagável na praça de Caratinga - MG</div>
+                <div class="manut_os_promissoria_fim col-lg-12" class="">
+                    <div class="manut_os_promissoria_emissao col-lg-6">
+                        <div><span style=""><?= $os['cli_nome'] ?></span> ___________________________________ <span style="">EMITENTE</span></div>
+                        <div><span style=""><?= $os['cli_nrodocumento'] ?></span> ___________________________________ <span style="">CPF/CNPJ</span></div>
+                        <div><span style="">Caratinga - MG</span> ___________________________________ <span style="">Endereço</span></div>
+                    </div>
+                    <div class="manut_os_promissoria_assinatura col-lg-6">
+                        <div><?= utf8_encode(strftime('%d de %B de %Y', strtotime((new \DateTime())->format('d/m/Y')))); ?></div>
+                        <div style="margin-top: 30px">________________________________ <span style="">Assinatura</span></div>
+                    </div>
+                </div>
+            </div>        
+        </div>
+        
+        <?php if($promissoria_num%3==0 && $promissoria_num<sizeof($os_finan['parcelas'])):?>
+        <div class="page-break_promissoria"></div>
+        <div class="col-lg-12" style="border-bottom: 1px dashed; margin: 5px 0;"></div>
+        <?php endif;?>
+    
+<?php $promissoria_num++; endforeach;endif; ?>
+</div>
+
 <script>
-    $(function (){
+    $(function () {
+
         var os_copy = $('#os-main').html();
         $('#os-main-copy').append(os_copy)
         
         var os_tam = $('#os-main').height();
-        if(os_tam > 465){ $('style').append('@media print { .page-break {page-break-after: always;} }'); }
+        if(os_tam > 470){ $('style').append('@media print { .page-break1 {page-break-after: always;} }'); }
+        if($('.manut_os_promissoria').length > 0){$('style').append('@media print { .page-break2 {page-break-after: always;} }');} 
         
         print();
     });
-    
+
 </script>

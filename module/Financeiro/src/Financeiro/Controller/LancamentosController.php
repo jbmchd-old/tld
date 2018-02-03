@@ -36,13 +36,11 @@ class LancamentosController extends GenericController {
                 $dados['parcelas'][$num_parcela]['situacao']='A';
                 unset($dados['parcelas'][$num_parcela]['dtapagamento']);
             }
-            $dados['parcelas'][$num_parcela]['tipopagamento'] = $dados['tipopagamento'];
-            
+
             if (substr_count($parcela['valor'], ',') > 0) {
                 $dados['parcelas'][$num_parcela]['valor'] = str_replace(',', '.', str_replace('.', '', $parcela['valor']));
             }
         }
-        unset($dados['tipopagamento']);
         unset($dados['tela_origem']);
         
         $srv = $this->app()->getEntity('FinanLancamentos');
@@ -99,7 +97,7 @@ class LancamentosController extends GenericController {
             $array['parcelas'][$num_parc]['valor'] = $cada['valor'];
             $array['parcelas'][$num_parc]['situacao'] = $cada['situacao'];
             $array['parcelas'][$num_parc]['dtapagamento'] = $cada['dtapagamento'];
-            $array['parcelas'][$num_parc]['tipopagamento'] = $cada['tipopagamento'];
+            $array['parcelas'][$num_parc]['formapagto'] = $cada['formapagto'];
         }
         
         return new JsonModel($array);
@@ -152,7 +150,7 @@ class LancamentosController extends GenericController {
                     'valor' => $transaction->TRNAMT->__toString(),
                     'situacao' => 'P',
                     'dtapagamento' => $data,
-                    'tipopagamento' => 'AV',
+                    'formapagto' => 'AV',
                     'obs' => 'Importação OFX - Banco '.$bank_info->BANKID->__toString(),
                 ]]
             ];

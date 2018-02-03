@@ -43,7 +43,7 @@ $(function () {
                 
                 cada.dtavencimento = cada.dtavencimento?cada.dtavencimento.split('-').reverse().join('/'):'-';
                 cada.dtapagamento = cada.dtapagamento?cada.dtapagamento.split('-').reverse().join('/'):'-';
-                cada.tipopagamento = cada.tipopagamento?cada.tipopagamento:'';
+                cada.formapagto = cada.formapagto?cada.formapagto:'';
                 
                 var descricao = cada.descricao;
                 if(cada.total_parcelas>1){
@@ -51,11 +51,11 @@ $(function () {
                 }
                 
                 if(cada.tipo === 'R'){
-                    $('#finan_det_list_tb_rec tbody').append('<tr data-id="'+cada.id+'" style="background:'+background+'"><td>'+cada.id+'</td><td>'+descricao+'</td><td data-tipo="currency">'+cada.valor+'</td><td>'+cada.categoria_nome+'</td><td>'+cada.situacao+'</td><td>'+cada.dtavencimento+'</td><td>'+cada.dtapagamento+'</td><td>'+cada.tipopagamento+'</td><td><button type="button" class="btn btn-default" name="edit"><i class="fa fa-edit"></i></button></td></tr>');
+                    $('#finan_det_list_tb_rec tbody').append('<tr data-id="'+cada.id+'" style="background:'+background+'"><td>'+cada.id+'</td><td>'+descricao+'</td><td data-tipo="currency">'+cada.valor+'</td><td>'+cada.categoria_nome+'</td><td>'+cada.situacao+'</td><td>'+cada.dtavencimento+'</td><td>'+cada.dtapagamento+'</td><td>'+cada.formapagto+'</td><td><button type="button" class="btn btn-default" name="edit"><i class="fa fa-edit"></i></button></td></tr>');
                 }
                 
                 if(cada.tipo === 'D'){
-                    $('#finan_det_list_tb_desp tbody').append('<tr data-id="'+cada.id+'" style="background:'+background+'"><td>'+cada.id+'</td><td>'+descricao+'</td><td data-tipo="currency">'+cada.valor+'</td><td>'+cada.categoria_nome+'</td><td>'+cada.situacao+'</td><td>'+cada.dtavencimento+'</td><td>'+cada.dtapagamento+'</td><td>'+cada.tipopagamento+'</td><td><button type="button" class="btn btn-default" name="edit"><i class="fa fa-edit"></i></button></td></tr>');
+                    $('#finan_det_list_tb_desp tbody').append('<tr data-id="'+cada.id+'" style="background:'+background+'"><td>'+cada.id+'</td><td>'+descricao+'</td><td data-tipo="currency">'+cada.valor+'</td><td>'+cada.categoria_nome+'</td><td>'+cada.situacao+'</td><td>'+cada.dtavencimento+'</td><td>'+cada.dtapagamento+'</td><td>'+cada.formapagto+'</td><td><button type="button" class="btn btn-default" name="edit"><i class="fa fa-edit"></i></button></td></tr>');
                 }    
             });
             

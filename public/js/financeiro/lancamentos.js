@@ -4,7 +4,7 @@ var finan_lanc_tela_origem_id = 0;
 var finan_lanc_tela_destino_result = {};
 
 function finan_lanc_carregalancamento(id, origem) {
-    if(['detalhamentos','manutencao'].indexOf(origem)){
+    if(['detalhamentos','manutencao'].indexOf(origem)>-1){
         $('.open-app[data-title=FinanLanc]').click();
     }
     
@@ -22,7 +22,7 @@ function finan_lanc_carregalancamento(id, origem) {
         } else {
             $('#finan_lanc_tipo :radio[value="R"]').prop('checked', true);
         }
-        $('#finan_lanc_tipopagamento :radio[value="' + result.parcelas[1].tipopagamento + '"]').prop('checked', true);
+        $('#finan_lanc_formapagto :radio[value="' + result.parcelas[1].formapagto + '"]').prop('checked', true);
         for (var num_parc in result.parcelas) {
             var parcela = result.parcelas[num_parc];
             if (num_parc > 1) {

@@ -72,7 +72,7 @@ class VFinanLancamentos extends Model {
         $sql = "select b.nome, a.tipo, a.situacao, sum(a.valor) total
                 from {$this->tableName} a
                 left join finan_categorias b on b.id=a.categoria_id
-                where dtaprincipal between '$data_inicio' and '$data_fim' and descricao like '%$string%' $caixa_sql $categoria_sql and a.tipopagamento='CH'
+                where dtaprincipal between '$data_inicio' and '$data_fim' and descricao like '%$string%' $caixa_sql $categoria_sql and a.formapagto='CH'
                 group by b.nome, a.tipo, a.situacao
                 order by b.nome, a.tipo desc, a.situacao";
         return $this->executeSql($sql);
