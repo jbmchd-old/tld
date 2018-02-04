@@ -19,7 +19,7 @@ class EstoqueController extends GenericController
         }
 
         $srv = $this->app()->getEntity('Produtos','ProdutosCategorias');
-        $result = $srv->getAll()['table'];
+        $result = $srv->getAllOrderByNome()['table'];
         return new JsonModel($result);
     }
     
@@ -28,7 +28,7 @@ class EstoqueController extends GenericController
         if (!$request->isPost()) { return false; }
 
         $srv = $this->app()->getEntity('VFornecedores');
-        $result = $srv->getAll()['table'];
+        $result = $srv->getAllOrderByNomeRazao()['table'];
         
         return new JsonModel($result);
     }
@@ -38,8 +38,7 @@ class EstoqueController extends GenericController
         if (!$request->isPost()) { return false; }
         $dados = $request->getPost()->toArray();
         $srv = $this->app()->getEntity('VProdMarcas');
-//        $result = $srv->getAll()['table'];
-        $result = $srv->getAllByFornecedorId($dados['fornecedor_id'])['table'];
+        $result = $srv->getAllByFornecedorIdOrderByNome($dados['fornecedor_id'])['table'];
         return new JsonModel($result);
     }
 

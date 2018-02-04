@@ -313,5 +313,4 @@ $(function () {
         buscaProdutos();
     });
 
-    $('.btn-app[data-title=ManutLanc]').click();
 });
