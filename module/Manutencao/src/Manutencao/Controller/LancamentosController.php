@@ -156,9 +156,9 @@ class LancamentosController extends GenericController {
         return new JsonModel($result);
     }
     
-    private function osParaArray($os){
+    private function osParaArray($os_bruta){
         $os = [];
-        foreach ($result as $cada) {
+        foreach ($os_bruta as $cada) {
             $os['id']=$cada['id'];
             $os['empresa_id']=$cada['empresa_id'];
             $os['funcionario_id']=$cada['funcionario_id'];
