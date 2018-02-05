@@ -81,6 +81,8 @@ $(function () {
             var dizimo = resumo.dizimo>0?resumo.dizimo:0;
             var cor_saldo = resumo.caixa_total>=0?'blue':'red';
             
+            $('#finan_det_list_caixa_anterior').html(' R$ '+parseFloat(resumo.caixa_anterior).toFixed(2));
+            
             $('#finan_det_list_total_rec_receber').html(' R$ '+resumo.receita_receber);
             $('#finan_det_list_total_rec_caixa').html(' R$ '+resumo.receita_caixa);
             $('#finan_det_list_total_rec').html(' R$ '+rec_total.toFixed(2));

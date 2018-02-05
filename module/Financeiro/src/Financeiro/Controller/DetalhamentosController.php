@@ -25,6 +25,7 @@ class DetalhamentosController extends GenericController {
         $result['resumo'] = $srv->buscaListagemResumo($dados['inicio'], $dados['fim'].' 23:29:29',$dados['string'],$dados['caixa_id'],$dados['categoria_id'])['table'][0];
         $result['categorias'] = $srv->buscaCategorias($dados['inicio'], $dados['fim'].' 23:29:29',$dados['string'],$dados['caixa_id'],$dados['categoria_id'])['table'];
         $result['cheques'] = $srv->buscaCheques($dados['inicio'], $dados['fim'].' 23:29:29',$dados['string'],$dados['caixa_id'],$dados['categoria_id'])['table'];
+        $result['resumo']['caixa_anterior'] = $srv->buscaCaixaAnterior()['table'][0]['caixa_anterior'];
 
         return new JsonModel($result);
     }

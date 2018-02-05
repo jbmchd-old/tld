@@ -79,4 +79,17 @@ class VFinanLancamentos extends Model {
         
     }
     
+    public function buscaCaixaAnterior(){
+        $mes_ant = date("m")-1;
+        if($mes_ant==0){$mes_ant=12;}
+
+        $data_inicio=date("Y-$mes_ant-01");; 
+        $data_fim=date('Y-m-t', strtotime($data_inicio)).' 23:29:29';
+        
+        $sql = " SELECT ((select ifnull(sum(valor),0) from {$this->tableName} where tipo='R' and situacao='P' and dtaprincipal between '$data_inicio' and '$data_fim')- (select ifnull(sum(valor),0) from {$this->tableName} where tipo='D' and situacao='P' and dtaprincipal between '$data_inicio' and '$data_fim')) 'caixa_anterior' FROM DUAL";
+                
+        return $this->executeSql($sql);
+        
+    }
+    
 }
