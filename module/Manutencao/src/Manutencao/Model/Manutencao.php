@@ -41,7 +41,8 @@ class Manutencao extends Model {
 
     public function salvaProdutos(array $itens, $manutencao_id) {
         
-        $result = [];
+        $result = ['error'=>false];
+        
         $sql = "select * from manutencao_itens where manutencao_id=$manutencao_id";
         $temp = $this->executeSql($sql)['table'];
         

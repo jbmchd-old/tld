@@ -105,7 +105,7 @@ class LancamentosController extends GenericController {
 
     //======== IMPORTACAO ============
 
-    public function importarOfxAction() {
+    public function importOfxAction() {
 
         $request = $this->getRequest();
         if (!$request->isPost()) {
@@ -140,17 +140,19 @@ class LancamentosController extends GenericController {
             $data = \DateTime::createFromFormat('Ymd', $data)->format('Y-m-d');
 
             $array[] = [
+                'id' => null,
                 'caixa_id' => $this->caixaId,
                 'categoria_id' => $this->categoriaId,
                 'descricao' => $transaction->MEMO->__toString(),
                 'tipo' => ($transaction->TRNTYPE->__toString() === 'CREDIT') ? 'R' : 'D',
+                'formapagto' => 'AV',
                 'dtainclusao' => date('Y-m-d H:i:s'),
                 'parcelas' => [[
+                    'id'=>null,
                     'dtavencimento' => $data,
                     'valor' => $transaction->TRNAMT->__toString(),
                     'situacao' => 'P',
                     'dtapagamento' => $data,
-                    'formapagto' => 'AV',
                     'obs' => 'Importação OFX - Banco '.$bank_info->BANKID->__toString(),
                 ]]
             ];

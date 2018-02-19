@@ -20,9 +20,7 @@ class LancamentosController extends GenericController {
         
         $srv = $this->app()->getEntity('VManutOs');
         $result = $srv->getAllById($id)['table'];
-//        echo '<pre>';
-//        print_r($result);
-//        die();
+
         $os_itens = [];
         $os_financeiro = [];
         foreach ($result as $os) {
@@ -138,6 +136,10 @@ class LancamentosController extends GenericController {
         }
         $dados = $request->getPost()->toArray();
         
+        $dados['precomaodeobra']= str_replace(',', '.', $dados['precomaodeobra']);
+        $dados['desc']= str_replace(',', '.', $dados['desc']);
+        $dados['precototal']= str_replace(',', '.', $dados['precototal']);
+        
         $dados['empresa_id'] = $this->sessao()->getArrayCopy('usuario')['empresa_id'];
         $dados['funcionario_id'] = $this->sessao()->getArrayCopy('usuario')['pessoas_id'];
         $dados['ordemservico'] = 'OS' . (new \DateTime())->format('ymdHis');
@@ -169,7 +171,7 @@ class LancamentosController extends GenericController {
             $os['descricao']=$cada['descricao'];
             $os['dtainclusao']=$cada['dtainclusao'];
             $os['precomaodeobra']=$cada['precomaodeobra'];
-            $os['percdesc']=$cada['percdesc'];
+            $os['desc']=$cada['desc'];
             $os['precototalos']=$cada['precototalos'];
             $os['dtaalteracao']=$cada['dtaalteracao'];
             $os['obs']=$cada['obs'];

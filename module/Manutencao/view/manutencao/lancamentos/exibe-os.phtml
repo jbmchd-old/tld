@@ -274,7 +274,7 @@ if (!$os['kilometragem'] > 0) {
                 <tr>
                     <th>Sub Total</th>
                     <th>Mão de Obra</th>
-                    <th>Desconto (%)</th>
+                    <th>Desconto</th>
                     <th>Total</th>
                     <th>Forma Pagto</th>
                 </tr>
@@ -283,8 +283,8 @@ if (!$os['kilometragem'] > 0) {
                 <tr>
                     <td><?= sprintf("%.2f", $total_itens) ?></td>
                     <td>R$ <?= $os['precomaodeobra'] ?></td>
-                    <td><?= $os['percdesc'] ?>%</td>
-                    <td>R$ <?= sprintf("%.2f", ($total_itens + $os['precomaodeobra']) - (($total_itens + $os['precomaodeobra']) * $os['percdesc']) / 100) ?></td>
+                    <td><?= $os['desc'] ?></td>
+                    <td>R$ <?= sprintf("%.2f", ($total_itens + $os['precomaodeobra']) - $os['desc'])?></td>
                     <td><?= $os_finan['formapagto'] ?></td>
                 </tr>
             </tbody>
@@ -382,7 +382,7 @@ if (!$os['kilometragem'] > 0) {
                         <div><span style="">Caratinga - MG</span> ___________________________________ <span style="">Endereço</span></div>
                     </div>
                     <div class="manut_os_promissoria_assinatura col-lg-6">
-                        <div><?= utf8_encode(strftime('%d de %B de %Y', strtotime((new \DateTime())->format('d/m/Y')))); ?></div>
+                        <div><?= utf8_encode(strftime('%d de %B de %Y', strtotime((new \DateTime())->format('m/d/Y')))); ?></div>
                         <div style="margin-top: 30px">________________________________ <span style="">Assinatura</span></div>
                     </div>
                 </div>

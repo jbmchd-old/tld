@@ -82,21 +82,8 @@ $(function () {
             $('#manut_prod').val('');
 
             atualizaSubTotal();
-            atualizaDesconto();
+            
         });
-    }
-
-    function atualizaDesconto() {
-        var valor = parseFloat($('#manut_subtotal_preco').html()) + parseFloat($('#manut_mao_obra').val());
-        if (isNaN(valor)) {
-            valor = 0
-        }
-        ;
-        var desc = parseFloat($('#manut_perc_desc').val());
-        var total_desc = parseFloat((valor * desc) / 100);
-        $('#manut_desc').val(total_desc.toFixed(2));
-
-        atualizaTotal();
     }
 
     function atualizaSubTotal() {
@@ -128,13 +115,16 @@ $(function () {
     }
 
     function atualizaTotal() {
-        var total_os = parseFloat($('#manut_subtotal_preco').html()) + parseFloat($('#manut_mao_obra').val());
+        var subtotal = parseFloat($('#manut_subtotal_preco').html().replace(',','.')).toFixed(2);
+        var maodeobra = parseFloat($('#manut_mao_obra').val().replace(',','.')).toFixed(2);
+        var desc = parseFloat($('#manut_desc').val().replace(',','.')).toFixed(2);
+        
+        var total_os = parseFloat(subtotal)+parseFloat(maodeobra) ;
         if (isNaN(total_os)) {
             total_os = 0
         }
-        ;
-        var total_desc = parseFloat($('#manut_desc').val());
-        $('#manut_total_preco').val(parseFloat(total_os - total_desc, 2));
+
+        $('#manut_total_preco').val(parseFloat(total_os - desc).toFixed(2));
     }
 
     function limpaCampos() {
@@ -196,7 +186,7 @@ $(function () {
             $('#manut_id').val(result.id);
             $('#manut_descricao').val(result.descricao);
             $('#manut_mao_obra').val(result.precomaodeobra);
-            $('#manut_perc_desc').val(result.percdesc);
+            $('#manut_desc').val(result.desc);
 
             var produtos = result.produtos;
             for (var id in produtos) {
@@ -205,7 +195,7 @@ $(function () {
             }
 
             atualizaSubTotal();
-            atualizaDesconto();
+            
 
         });
 
@@ -253,12 +243,8 @@ $(function () {
         return false;
     });
 
-    $('#manut_perc_desc').change(function (e) {
-        atualizaDesconto();
-    });
-
-    $('#manut_mao_obra, #manut_perc_desc').keyup(function (e) {
-        atualizaDesconto();
+    $('#manut_mao_obra, #manut_desc').keyup(function (e) {
+        atualizaTotal();
     });
 
     $('#manut_form').submit(function () {
@@ -311,6 +297,8 @@ $(function () {
         limpaCampos();
         buscaClientes();
         buscaProdutos();
+        
+        $('#manut_mao_obra, #manut_desc').val(0)
     });
 
 });
