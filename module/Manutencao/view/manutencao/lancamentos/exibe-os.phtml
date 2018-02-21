@@ -377,7 +377,7 @@ if (!$os['kilometragem'] > 0) {
                 <div class="manut_os_promissoria_praca col-lg-12" class="">Pagável na praça de Caratinga - MG</div>
                 <div class="manut_os_promissoria_fim col-lg-12" class="">
                     <div class="manut_os_promissoria_emissao col-lg-6">
-                        <div><span style=""><?= $os['cli_nome'] ?></span> ___________________________________ <span style="">EMITENTE</span></div>
+                        <div><span style=""><?= (strlen(trim($os['cli_apelido']))>0)?$os['cli_apelido']:$os['cli_nome']; ?></span> ___________________________________ <span style="">EMITENTE</span></div>
                         <div><span style=""><?= $os['cli_nrodocumento'] ?></span> ___________________________________ <span style="">CPF/CNPJ</span></div>
                         <div><span style="">Caratinga - MG</span> ___________________________________ <span style="">Endereço</span></div>
                     </div>

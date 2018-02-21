@@ -1,0 +1,137 @@
+
+<script type="text/javascript" src="/public/js/financeiro/ofx.js"></script>
+
+<div id="finan_importofx_janela" class="janela col-lg-push-4 col-lg-3" style="display: none" data-title="FinanOfx">
+    <div class="divisao-janela">
+        <div class="modal-header">
+            <button type="button" data-toggle="tooltip" data-placement="bottom" title="Fechar">
+                <i class="fa fa-close "></i>
+            </button>
+            <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit "></i> OFX</h4>
+        </div>
+        <div class="modal-body clearfix">
+
+            <div id="finan_importofx_alertas" class="label label-default col-lg-12 hide"></div>
+            
+            <form class="clear-both" id="finan_importofx_form" method="post" action="/finan/ofx/importOfx" >
+                <div id="finan_importofx_alertas" class="label label-default col-lg-12"></div>
+                <div class="col-lg-12 form-group  clear-both">
+                    <div class="">
+                        <label>Arquivo OFX*</label>
+                        <input type="file" class="btn btn-default" name="file" accept=".ofx" />
+                    </div>
+                    <div class="col-lg-12 text-center">
+                        <button class="text-center btn btn-default" style="margin-top: 20px" >
+                            <i class="fa fa-check" style="color:#cc7a00"></i> Importar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="finan_importofx_trn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-close "></i></button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit "></i> Arquivo OFX</h4>
+            </div>
+            <div class="modal-body clearfix">
+
+                <div id="finan_importofx_trn_alertas" class="label label-default col-lg-12"></div>
+                
+                <div>
+                    <button class="btn btn-success float-right" id="finan_importofx_trn_concluir">Concluir alterações</button>
+                </div>
+
+                <div class="col-lg-12" style="margin-top: 10px; max-height: 550px; overflow: auto">
+                    <table class="table table-bordered table-condensed table-striped" id="finan_importofx_trn_tab">
+                        <thead>
+                            <tr>
+                                <th class="col-lg-1">Tipo</th>
+                                <th>Data</th>
+                                <th class="col-lg-1">Valor</th>
+                                <th>Descrição</th>
+                                <th>Lançar</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="finan_importofx_lancamento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-close "></i></button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit "></i> Arquivo OFX</h4>
+            </div>
+            <div class="modal-body clearfix">
+
+                <div id="finan_importofx_lanc_alertas" class="label label-default col-lg-12"></div>
+
+                <div class="col-lg-12" style="margin-bottom: 10px">
+                    <div>                            
+                        <div class="form-group col-lg-2">
+                            <label>Início</label>
+                            <input class="form-control" id="finan_importofx_lanc_pesq_inicio" readonly />
+                        </div>
+
+                        <div class="form-group col-lg-2">
+                            <label>Fim</label>
+                            <input class="form-control" id="finan_importofx_lanc_pesq_fim" readonly />
+                        </div>
+                        
+                        <button type="button" id="finan_importofx_lanc_pesquisar" class="btn btn-default" style="margin-top: 20px"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+
+                <div class="col-lg-12" style="max-height: 400px; overflow: auto;">
+                    <table class="table table-bordered table-condensed table-striped" id="finan_importofx_lanc_tb_sug">
+                        <thead>
+                            <tr>
+                                <th colspan="9" class="col-lg-1">Sugestões</th>
+                            </tr>
+                            <tr>
+                                <th class="col-lg-1">#</th>
+                                <th>Descrição</th>
+                                <th class="col-lg-1">Valor</th>
+                                <th class="col-lg-1">Sit.</th>
+                                <th class="col-lg-1">Vencimento</th>
+                                <th><i class="fa fa-check"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                
+                <div class="col-lg-12" style="max-height: 400px; overflow: auto;">
+                    <table class="table table-bordered table-condensed table-striped" id="finan_importofx_lanc_tb_lanc">
+                        <thead>
+                            <tr>
+                                <th colspan="9" class="col-lg-1">Lançamentos</th>
+                            </tr>
+                            <tr>
+                                <th class="col-lg-1">#</th>
+                                <th>Descrição</th>
+                                <th class="col-lg-1">Valor</th>
+                                <th class="col-lg-1">Sit.</th>
+                                <th class="col-lg-1">Vencimento</th>
+                                <th><i class="fa fa-check"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

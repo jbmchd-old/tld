@@ -27,7 +27,6 @@
 
             <div class="form-group col-lg-12" style="margin: 10px 0">
                 <button type="button" class="btn btn-default btn-sm" id="finan_lanc_ultlanc_btn"><i class="fa fa-list-ol fa-1x"></i></button>
-                <button type="button" class="btn btn-default btn-sm" id="finan_lanc_importofx_btn"><i class="fa fa-file-text-o fa-1x"></i></button>
             </div>
 
             <form class="col-lg-12 clear-both" method="POST" id="finan_lanc_form">
@@ -107,46 +106,6 @@
                     </button>
                 </div>
             </form>
-        </div>
-    </div>
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="finan_lanc_importofx" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-close "></i></button>
-                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit "></i> Importar banco</h4>
-            </div>
-            <div class="modal-body clearfix">
-
-                <div id="finan_lanc_importofx_alertas" class="label label-default col-lg-12 hide"></div>
-
-                <form class="clear-both" id="finan_lanc_importofx_form" method="post" action="/finan/lancamentos/importOfx" >
-                    <div id="finan_lanc_importofx_alertas" class="label label-default col-lg-12"></div>
-                    <div class="form-group  clear-both">
-                        <div class="">
-                            <label>Arquivo OFX*</label>
-                            <input type="file" class="btn btn-default" name="file" accept=".ofx" />
-                        </div>
-                        <div class="">
-                            <label>Caixa *</label>
-                            <select class="form-control" name="caixa_id" id="finan_lanc_importofx_caixas"></select>
-                        </div>
-                        <div class="">
-                            <label>Categoria *</label>
-                            <select class="form-control" name="categoria_id" id="finan_lanc_importofx_categorias"></select>
-                        </div>
-                        <div class="col-lg-12 text-center">
-                            <button class="text-center btn btn-default" style="margin-top: 20px" >
-                                <i class="fa fa-check" style="color:#cc7a00"></i> Importar
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
         </div>
     </div>
 </div>

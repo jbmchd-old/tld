@@ -46,6 +46,16 @@ return [
                     ],
                 ],
             ],
+            'finan-ofx' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/finan/ofx[/:action]',
+                    'defaults' => [
+                        'controller' => 'Financeiro\Controller\Ofx',
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
             'finan-detalhamento' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -74,6 +84,7 @@ return [
             'Financeiro\Controller\Categorias'      => 'Financeiro\Controller\CategoriasController',
             'Financeiro\Controller\Caixas'          => 'Financeiro\Controller\CaixasController',
             'Financeiro\Controller\Detalhamentos'   => 'Financeiro\Controller\DetalhamentosController',
+            'Financeiro\Controller\Ofx'             => 'Financeiro\Controller\OfxController',
         ],
     ],
     'view_manager' => [
@@ -87,6 +98,7 @@ return [
             'telas/financeiro/caixas'       => __DIR__ . '/../view/financeiro/telas/caixas.phtml',
             'telas/financeiro/categorias'   => __DIR__ . '/../view/financeiro/telas/categorias.phtml',
             'telas/financeiro/detalhamentos'=> __DIR__ . '/../view/financeiro/telas/detalhamentos.phtml',
+            'telas/financeiro/ofx'          => __DIR__ . '/../view/financeiro/telas/ofx.phtml',
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',

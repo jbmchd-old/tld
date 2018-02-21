@@ -67,7 +67,7 @@ class VeiculosController extends GenericController {
             return false;
         }
         $dados = $request->getPost()->toArray();
-        $srv = $this->app()->getEntity('VVeiculos');
+        $srv = $this->app()->getEntity('PessoasVeiculos');
         $veic = $srv->getAllByPessoasId($dados['pessoas_id'])['table'];
         return new JsonModel($veic);
     }

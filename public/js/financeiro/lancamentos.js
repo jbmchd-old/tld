@@ -45,19 +45,6 @@ function finan_lanc_carregalancamento(id, origem) {
 
 $(function () {
 
-    //======== IMPORTACAO ==================================
-    $('#finan_lanc_importofx_btn').click(function () {
-        $('#finan_lanc_importofx').modal();
-    });
-
-    $('#finan_lanc_importofx_form').ajaxForm(function (result) {
-        if (!result.error) {
-            $().alert({titulo: 'Tudo certo!', texto: 'Arquivo importado com sucesso!<br /> ' + result.registros + ' inserido(s)'});
-        } else {
-            $().alert({titulo: 'Problema!', texto: 'Ocorreu algum problema com a seguinte mensagem:<br /> ' + result.message + ''});
-        }
-    });
-
     //======== ULTIMOS LANCAMENTOS ==================================
 
     $('#finan_lanc_ultlanc_btn').click(function () {
@@ -78,9 +65,9 @@ $(function () {
         $.ajax({
             url: '/finan/caixas/buscaCaixas',
         }).done(function (result) {
-            $('#finan_lanc_caixas, #finan_lanc_importofx_caixas').html('');
+            $('#finan_lanc_caixas').html('');
             $(result).each(function (i, cada) {
-                $('#finan_lanc_caixas, #finan_lanc_importofx_caixas').append('<option value="' + cada.id + '">' + cada.nome + '</option>');
+                $('#finan_lanc_caixas').append('<option value="' + cada.id + '">' + cada.nome + '</option>');
             });
 
         });
@@ -90,9 +77,9 @@ $(function () {
         $.ajax({
             url: '/finan/categorias/buscaCategorias',
         }).done(function (result) {
-            $('#finan_lanc_cat, #finan_lanc_importofx_categorias').html('');
+            $('#finan_lanc_cat').html('');
             $(result).each(function (i, cada) {
-                $('#finan_lanc_cat, #finan_lanc_importofx_categorias').append('<option value="' + cada.id + '">' + cada.nome + '</option>');
+                $('#finan_lanc_cat').append('<option value="' + cada.id + '">' + cada.nome + '</option>');
             });
 
         });

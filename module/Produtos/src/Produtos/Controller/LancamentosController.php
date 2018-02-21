@@ -46,9 +46,6 @@ class LancamentosController extends GenericController
             $dados['dtainclusao'] = (new \DateTime())->format('Y-m-d H:m:i');
         }
         
-//        $dados['precocusto'] = trim(str_replace(',', '.', str_replace('.', '', str_replace('R$', '', $dados['precocusto']))));
-//        $dados['precovenda'] = trim(str_replace(',', '.', str_replace('.', '', str_replace('R$', '', $dados['precovenda']))));
-        
         if(substr_count($dados['precocusto'], ',')>0){
             $dados['precocusto'] = trim(str_replace(',', '.', str_replace('.', '', $dados['precocusto'])));
         }

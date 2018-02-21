@@ -134,10 +134,11 @@ $(function () {
         filtraTabela($(this).val());
     });
     
-    $('#prod_est_forn_select').change(function () {
+    $('#prod_est_forn_select, #prod_est_modal_forn_select').change(function () {
         var id = $(this).val();
         if (id > 0) {
-            buscaMarcas(id, '#prod_est_marca_select');
+            var destino = ($(this).attr('id')=='prod_est_forn_select')?'#prod_est_marca_select':'#prod_est_modal_marca_select';
+            buscaMarcas(id, destino);
         } else {
             $(this).val(0);
         }

@@ -17,7 +17,7 @@ class VFinanLancamentos extends Model {
         return $this->executeSql($sql);
     }
     
-    public function buscaListagem($data_inicio, $data_fim, $string, $caixa_id, $categoria_id){
+    public function buscaListagem($data_inicio, $data_fim, $string='', $caixa_id='', $categoria_id=''){
         
         $caixa_sql = ($caixa_id>0)?" and caixa_id=$caixa_id":'';
         $categoria_sql = ($categoria_id>0)?" and categoria_id=$categoria_id":'';
@@ -92,4 +92,8 @@ class VFinanLancamentos extends Model {
         
     }
     
+    public function buscaLancamentosPorValor($valor){
+        $sql = "select * from {$this->tableName} where valor=$valor";
+        return $this->executeSql($sql);
+    }
 }

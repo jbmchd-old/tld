@@ -97,7 +97,9 @@ $(function () {
             url: "/pessoas/salvar",
             data: {
                 id: $('*[name=id]').val(),
+                empresa_id: 1,
                 nome_razao: $('*[name=nome_razao]').val(),
+                apelido: $('*[name=apelido]').val(),
                 tipodocumento: $('*[name=tipodocumento]').val(),
                 nrodocumento: $('*[name=nrodocumento]').val(),
                 dtanascimento: $('*[name=dtanascimento]').val(),
@@ -122,7 +124,7 @@ $(function () {
         return false;
     });
 
-    $('.open-app[data-title=Pessoas]').click(function () {
+    $('.btn-app[data-title=Pessoas]').click(function () {
         buscaPessoas();
     });
 
