@@ -16,22 +16,14 @@ class IndexController extends GenericController
    
     public function indexAction(){
         
-        $auth = $this->zfcUserAuthentication();
         
+        $auth = $this->zfcUserAuthentication();
         if($auth->hasIdentity()){
-            $id = $auth->getIdentity();
-            
-            $auth_user = [
-                'user_id'       => $id->getId(),
-                'pessoas_id'    => $id->getPessoasId(),
-                'username'      => $id->getUsername(),
-                'email'         => $id->getEmail(),
-                'display_name'  => $id->getDisplayName(),
-                'state'         => $id->getState(),
-                'nome_razao'    => $id->getNomeRazao(),
-                'empresa_id'    => 1
-            ];
-            
+            $srv = $this->app()->getEntity('VUsuarios');
+            $id = $auth->getIdentity()->getId();
+            $auth_user = $srv->getByUserId($id)['table']->toArray();
+            unset($auth_user['password']);
+
             $this->sessao()->addInSession($auth_user, 'usuario');
             
         } else {

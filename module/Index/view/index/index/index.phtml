@@ -2,11 +2,12 @@
 echo $this->headLink(array('rel' => 'shortcut icon', 'href' => ''))
         ->prependStylesheet($this->basePath() . 'public/css/index.css');
 
-echo $this->headScript()
-        ->prependFile($this->basePath() . 'public/js/index/index.js');
-
 $this->headMeta()->appendName('keywords', 'Sistema, Agendas');
 ?>
+
+<script type="text/javascript" src="/public/js/index/index.js"></script>
+
+
 <!-- Cabeçalho -->
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 
@@ -25,9 +26,9 @@ $this->headMeta()->appendName('keywords', 'Sistema, Agendas');
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
             <ul class="nav navbar-nav col-lg-push-3" style="position: relative">
-                                
+
 <!--                <li> <button type="button" class="btn btn-app" data-toggle="tooltip" data-placement="right" data-title="Bi" title="Bi"><i class="fa fa-line-chart fa-1x" aria-hidden="true"></i><br /><span>B.I.</span></button> </li>-->
-                
+
                 <li style="border-left: 1px solid #FF9900">
                     <div class="dropdown">
                         <button type="button" class="btn btn-app-dropdown" data-toggle="dropdown" data-placement="right"><i class="fa fa-money fa-1x" aria-hidden="true"></i><br /><span>Financeiro</span><span class="caret"> </span></button>
@@ -40,9 +41,9 @@ $this->headMeta()->appendName('keywords', 'Sistema, Agendas');
                         </ul>
                     </div>
                 </li>
-                
+
                 <li> <button type="button" class="btn btn-app" data-toggle="tooltip" data-placement="right" data-title="ManutLanc" title="ManutLanc"><i class="fa fa-wrench fa-1x" aria-hidden="true"></i><br /><span>Manutenção</span></button> </li>
-                
+
                 <li>
                     <div class="dropdown">
                         <button type="button" class="btn btn-app-dropdown" data-toggle="dropdown" data-placement="right" data-title="Produtos" title="Produtos"><i class="fa fa-shopping-cart fa-1x" aria-hidden="true"></i><br /><span>Produtos</span><span class="caret"> </span></button>
@@ -54,23 +55,24 @@ $this->headMeta()->appendName('keywords', 'Sistema, Agendas');
                         </ul>
                     </div>
                 </li>
-                
+
                 <li> <button type="button" class="btn btn-app" data-toggle="tooltip" data-placement="right" data-title="Pessoas" title="Pessoas"><i class="fa fa-user fa-1x" aria-hidden="true"></i><br /><span>Pessoas</span></button> </li>
-<!--                <li>
-                    <div class="dropdown">
-                        <button type="button" class="btn btn-app-dropdown" data-toggle="dropdown" data-placement="right"><i class="fa fa-user fa-1x" aria-hidden="true"></i><br /><span>Pessoas</span><span class="caret"> </span></button>
-                        <ul class="dropdown-menu" aria-labelledby="dLabel">
-                            <li class="open-app" data-title="Funcionarios" title="Funcionários"><a href="#"><i class="fa fa-user fa-1x" aria-hidden="true"></i><span> Funcionários</span></a></li>
-                            <li class="open-app" data-title="Pessoas" title="Pessoas"><a href="#"><i class="fa fa-user fa-1x" aria-hidden="true"></i><span> Pessoas</span></a></li>
-                        </ul>
-                    </div>
-                </li>-->
-                
+                <!--                <li>
+                                    <div class="dropdown">
+                                        <button type="button" class="btn btn-app-dropdown" data-toggle="dropdown" data-placement="right"><i class="fa fa-user fa-1x" aria-hidden="true"></i><br /><span>Pessoas</span><span class="caret"> </span></button>
+                                        <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                            <li class="open-app" data-title="Funcionarios" title="Funcionários"><a href="#"><i class="fa fa-user fa-1x" aria-hidden="true"></i><span> Funcionários</span></a></li>
+                                            <li class="open-app" data-title="Pessoas" title="Pessoas"><a href="#"><i class="fa fa-user fa-1x" aria-hidden="true"></i><span> Pessoas</span></a></li>
+                                        </ul>
+                                    </div>
+                                </li>-->
+
                 <li> <button type="button" class="btn btn-app" data-toggle="tooltip" data-placement="right" data-title="Veiculos" title="Veiculos"><i class="fa fa-car fa-1x" aria-hidden="true"></i><br /><span>Veículos</span></button> </li>
-                
+
                 <li style="border-left: 1px solid #FF9900"> <button type="button" class="btn btn-app"><a href="https://webmail1.hostinger.com.br/roundcube/?_task=logout&_token=wqiPvkhkVx0AIRFatfJUt9e0viJPFIBP" target="_blanck"><i class="fa fa-envelope fa-1x" aria-hidden="true"></i><br /><span>Email</span></a> </button></li>
                 <li> <button type="button" class="btn btn-app" data-toggle="tooltip" data-placement="right" data-title="Backup" title="Backup" id="backup"><i class="fa fa-database fa-1x" aria-hidden="true"></i><br /><span>Backup</span></button> </li>
-                
+                <li> <button type="button" class="btn btn-app" data-toggle="tooltip" data-placement="right" data-title="MudarSenha" title="MudarSenha" id="MudarSenha"><i class="fa fa-lock fa-1x" aria-hidden="true"></i><br /><span>Senha</span></button> </li>
+
                 <li style="border-left: 1px solid #FF9900"> <button type="button" class="btn btn-app"><a href="/user/logout"><i class="fa fa-sign-out fa-1x" aria-hidden="true"></i><br /><span>Sair</span></a> </button></li>
             </ul>
 
@@ -78,9 +80,58 @@ $this->headMeta()->appendName('keywords', 'Sistema, Agendas');
     </div><!-- /.container-fluid -->
 </nav>
 
+
+
+
+
 <!-- // Cabeçalho -->
 
 <div style="padding-top:51px; height: 100%" class="container-fluid no-padding">
+
+    <div id="index_senha_janela" class="janela col-lg-push-4 col-lg-3" style="display: none" data-title="MudarSenha">
+        <div class="divisao-janela">
+            <div class="modal-header">
+                <button type="button" data-toggle="tooltip" data-placement="bottom" title="Fechar">
+                    <i class="fa fa-close "></i>
+                </button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit "></i> Senha</h4>
+            </div>
+            <div class="modal-body clearfix">
+
+                <div id="index_senha_alertas" class="label label-default col-lg-12 hide"></div>
+                
+                <form class="clear-both" id="index_senha_form" method="post" action="#" >
+                    <div class="form-group col-lg-12">
+                        <label>Senha atual *</label>
+                        <input type="password" class="form-control col-lg-12" name="credential" id="index_senha_atual" required />
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label>Nova senha*</label>
+                        <input type="password" class="form-control col-lg-12" name="newCredential" id="index_password" required />
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label>Confirme a nova senha *</label>
+                        <input type="password" class="form-control col-lg-12" name="newCredentialVerify" id="index_password_confirm" required />
+                    </div>
+                    
+                    <div class="col-lg-12 text-center">
+                        <button class="text-center btn btn-default" style="margin: 10px 0" >
+                            <i class="fa fa-check" style="color:#cc7a00"></i> Mudar senha
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
 
     <!-- Corpo -->
     <?php echo $this->partial('telas/pessoas', ['variaveis' => $this->telas]) ?>

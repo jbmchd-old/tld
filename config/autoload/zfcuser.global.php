@@ -21,7 +21,7 @@ $settings = array(
      * instead of the default one provided. Default is ZfcUser\Entity\User.
      * The entity class should implement ZfcUser\Entity\UserInterface
      */
-    'user_entity_class' => 'Index\Entity\VUsuarios',
+    'user_entity_class' => 'Index\Entity\AcessoUsuario',
 
     /**
      * Enable registration
@@ -215,7 +215,7 @@ $settings = array(
     /**
      * User table name
      */
-    'table_name' => 'v_usuarios',
+    'table_name' => 'acesso_usuario',
     
     /**
      * End of ZfcUser configuration
