@@ -16,8 +16,11 @@ class Manutencao extends Model {
         $this->beginTransaction();
 
         $result = [];
-        $itens = $manutencao['produtos'];
-        unset($manutencao['produtos']);
+        $itens = [];
+        if(isset($manutencao['produtos'])){
+            $itens = $manutencao['produtos'];
+            unset($manutencao['produtos']);
+        }
         $result = $this->salvaManutencao($manutencao);
 
         if ($result['id'] > 0) {
@@ -136,6 +139,7 @@ class Manutencao extends Model {
     }
 
     private function atualizaEstoque(array $itens) {
+        $result = ['error'=>false];
         foreach ($itens as $produto_id => $quant) {
             $sql = "UPDATE produtos SET quantidade=$quant WHERE id=$produto_id";
             $result = $this->executeSql($sql);

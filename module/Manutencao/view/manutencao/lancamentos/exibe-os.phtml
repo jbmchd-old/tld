@@ -86,7 +86,7 @@ if (!$os['kilometragem'] > 0) {
 ?>
 
 <style>
-    @page { margin: 0; }
+    /*@page { margin: 0; }*/
 
     body:not(#manut_os_promissorias *){
         background: transparent;
@@ -181,7 +181,12 @@ if (!$os['kilometragem'] > 0) {
         padding: 0;
         font-size: 10px;
     }
-
+    table td[class*="col-"], table th[class*="col-"] {
+        position: static;
+        float: none;
+        display: table-cell;
+    }
+    
     /* BOOTSTRAP - FIM */
     
     .manut_os_promissorias *{font-size: 13px;}
@@ -203,9 +208,6 @@ if (!$os['kilometragem'] > 0) {
     .manut_os_promissoria_assinatura {top: 190px; left: 314px; line-height: 18px; }
     
     @media print { .page-break_promissoria {page-break-after: always;} }
-    /*        @media print {
-                .page-break {page-break-after: always;}
-            }*/
 </style>
 
 <div class="col-lg-12" id="os-main">
@@ -247,8 +249,8 @@ if (!$os['kilometragem'] > 0) {
                     <th class="col-lg-1">Cód.</th> 
                     <th class="col-lg-4">Descrição</th> 
                     <th class="col-lg-1">Quant.</th> 
-                    <th class="col-lg-2">Prc. Unit</th> 
-                    <th class="col-lg-2">Total</th> 
+                    <th class="col-lg-1">Prc. Unit</th> 
+                    <th class="col-lg-1">Total</th> 
                     <th class="col-lg-2">Vend.</th>
                 </tr>
             </thead>
@@ -260,7 +262,7 @@ if (!$os['kilometragem'] > 0) {
                         <td class="col-lg-1"><?= $item['quant'] ?></td>
                         <td class="col-lg-2">R$ <?= $item['precovenda'] ?></td>
                         <td class="col-lg-2">R$ <?= $item['precototal'] ?></td>
-                        <td class="col-lg-2"><?= $os['func_nome'] ?></td>
+                        <td class="col-lg-2"><?= (trim($os['func_apelido']))?$os['func_apelido']:$os['func_nome'] ?></td>
                     </tr>
 <?php endforeach; ?>
             </tbody>
@@ -321,7 +323,7 @@ if (!$os['kilometragem'] > 0) {
 
         <div class="col-lg-8">
             <div>Descrição</div>
-            <textarea class="col-lg-12" rows="3" placeholder="Descrição"><?= $os['descricao'] ?></textarea>
+            <textarea class="col-lg-12 manut_os_descricao" rows="3" placeholder="Descrição"><?= $os['descricao'] ?></textarea>
         </div>
         <div class="col-lg-4">
             <div>Recebemos</div>
@@ -337,7 +339,7 @@ if (!$os['kilometragem'] > 0) {
 
 </div>
 <div class="page-break1"></div>
-<div class="col-lg-12" style="border-bottom: 1px dashed; margin: 20px 0;"></div>
+<div id="manut_os_corte1" class="col-lg-12" style="border-bottom: 1px dashed; margin: 20px 0;"></div>
 
 
 <div class="col-lg-12" id="os-main-copy"></div>
@@ -348,7 +350,7 @@ if (!$os['kilometragem'] > 0) {
 </div>
 
 <div class="page-break2"></div>
-<div class="col-lg-12" style="border-bottom: 1px dashed; margin: 5px 0;"></div>
+<div id="manut_os_corte2" class="col-lg-12" style="border-bottom: 1px dashed; margin: 5px 0;"></div>
 
 <div class="col-lg-12" id="manut_os_promissorias">
 <?php if (strlen($os_finan['descricao'])): $promissoria_num=1; foreach ($os_finan['parcelas'] as $num => $parcela) : $obj_dtavencimento = (new \DateTime($parcela['dtavencimento']))?>
@@ -399,15 +401,21 @@ if (!$os['kilometragem'] > 0) {
 
 <script>
     $(function () {
-
+        
+        var manut_os_descricao = $('.manut_os_descricao').html();
+        if(manut_os_descricao.length/70>3){
+            $('.manut_os_descricao').attr('rows',Math.ceil(manut_os_descricao.length/70)+1);
+        }
+        
         var os_copy = $('#os-main').html();
         $('#os-main-copy').append(os_copy)
         
         var os_tam = $('#os-main').height();
-        if(os_tam > 470){ $('style').append('@media print { .page-break1 {page-break-after: always;} }'); }
+        if(os_tam > 490){ $('style').append('@media print { .page-break1 {page-break-after: always;} }'); $('#manut_os_corte1').remove() }
         if($('.manut_os_promissoria').length > 0){$('style').append('@media print { .page-break2 {page-break-after: always;} }');} 
         
         print();
+        
     });
 
 </script>

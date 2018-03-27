@@ -115,14 +115,37 @@ $(function () {
     }
 
     function atualizaTotal() {
-        var subtotal = parseFloat($('#manut_subtotal_preco').html().replace(',','.')).toFixed(2);
-        var maodeobra = parseFloat($('#manut_mao_obra').val().replace(',','.')).toFixed(2);
-        var desc = parseFloat($('#manut_desc').val().replace(',','.')).toFixed(2);
+        var subtotal = parseFloat($('#manut_subtotal_preco')
+                                                            .html()
+//                                                            .replace('.','')
+//                                                            .replace(',','.')
+                                                            )
+                                                            .toFixed(2);
+                                                    
+        var maodeobra = parseFloat($('#manut_mao_obra')
+                                                        .val()
+                                                        .replace('.','')
+                                                        .replace(',','.'))
+                                                        .toFixed(2);
+                                                
+        var desc = parseFloat($('#manut_desc')
+                                                .val()
+                                                .replace('.','')
+                                                .replace(',','.'))
+                                                .toFixed(2);
+        
+        console.log(subtotal);
+        console.log(maodeobra);
+        console.log(desc);
+        
+        if (isNaN(subtotal)) {
+            subtotal = 0
+        }
+        if (isNaN(maodeobra)) {
+            maodeobra = 0
+        }
         
         var total_os = parseFloat(subtotal)+parseFloat(maodeobra) ;
-        if (isNaN(total_os)) {
-            total_os = 0
-        }
 
         $('#manut_total_preco').val(parseFloat(total_os - desc).toFixed(2));
     }
@@ -185,8 +208,8 @@ $(function () {
             $('#manut_veic_km').val(result.kilometragem);
             $('#manut_id').val(result.id);
             $('#manut_descricao').val(result.descricao);
-            $('#manut_mao_obra').val(result.precomaodeobra);
-            $('#manut_desc').val(result.desc);
+            $('#manut_mao_obra').val(result.precomaodeobra.replace('.',','));
+            $('#manut_desc').val(result.desc.replace('.',''));
 
             var produtos = result.produtos;
             for (var id in produtos) {

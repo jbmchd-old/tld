@@ -8,7 +8,11 @@ $(function () {
             
             $('#finan_importofx_lanc_tb_sug tbody').html('');
             $(result).each(function (i, lanc){
-                $('#finan_importofx_lanc_tb_sug tbody').append('<tr data-id="'+lanc.parcela_id+'"><td>'+lanc.parcela_id+'</td><td>'+lanc.descricao+'</td><td>'+lanc.valor+'</td><td>'+lanc.situacao+'</td><td>'+lanc.dtavencimento+'</td><td><button class="btn btn-default"><i class="fa fa-check"></i></button></td></tr>');
+                var descricao = lanc.descricao;
+                if(lanc.total_parcelas>1){
+                    descricao = lanc.descricao+' '+lanc.num+'/'+lanc.total_parcelas
+                }
+                $('#finan_importofx_lanc_tb_sug tbody').append('<tr data-id="'+lanc.parcela_id+'"><td><input type="checkbox" /></td><td>'+lanc.parcela_id+'</td><td>'+descricao+'</td><td>'+lanc.valor+'</td><td>'+lanc.situacao+'</td><td>'+lanc.dtavencimento+'</td><td><button class="btn btn-default"><i class="fa fa-check"></i></button></td></tr>');
             });
             
             $('#finan_importofx_lancamento').modal();
@@ -32,11 +36,16 @@ $(function () {
             }
             
             var lancamentos = result.table;
-            
             $('#finan_importofx_lanc_tb_lanc tbody').html('');
+            
             $(lancamentos).each(function (i, lanc){
+                var descricao = lanc.descricao;
+                if(lanc.total_parcelas>1){
+                    descricao = lanc.descricao+' '+lanc.num+'/'+lanc.total_parcelas
+                }
+                
                 var dtavencimento = lanc.dtavencimento.split('-').reverse().join('/');
-                $('#finan_importofx_lanc_tb_lanc tbody').append('<tr data-id="'+lanc.parcela_id+'"><td>'+lanc.parcela_id+'</td><td>'+lanc.descricao+'</td><td>'+lanc.valor+'</td><td>'+lanc.situacao+'</td><td>'+dtavencimento+'</td><td><button class="btn btn-default"><i class="fa fa-check"></i></button></td></tr>');
+                $('#finan_importofx_lanc_tb_lanc tbody').append('<tr data-id="'+lanc.parcela_id+'"><td><input type="checkbox" /></td><td>'+lanc.parcela_id+'</td><td>'+descricao+'</td><td>'+lanc.valor+'</td><td>'+lanc.situacao+'</td><td>'+dtavencimento+'</td><td><button class="btn btn-default"><i class="fa fa-check"></i></button></td></tr>');
             });
             
         });
@@ -86,15 +95,14 @@ $(function () {
     
     $('#finan_importofx_trn_concluir').click(function (){
         var alteracoes = [];
-        $('#finan_importofx_trn_tab tbody tr').filter(function(){if($(this).attr('data-id')>0) return true;}).each(function (i, tr){
-            var id = $(tr).attr('data-id');
+        $('#finan_importofx_trn_tab tbody tr').filter(function(){if($(this).hasClass('success')) return true;}).each(function (i, tr){
+            var id = $(tr).attr('data-id').split(',');
             var dtapagamento = $(tr).find('td:nth-child(2)').html();
             alteracoes.push({
                 id:id,
                 dtapagamento:dtapagamento
             });
         });
-        
         salvar(alteracoes);
     });
     
@@ -120,4 +128,16 @@ $(function () {
    $('#finan_importofx_lancamento').on('hidden.bs.modal', function (e) {
         $("#finan_importofx_trn_tab tbody tr[data-flag=last-click]").removeAttr('data-flag');
     });
+    
+    $('#finan_importofx_lanc_concluir').click(function (){
+        var ids=[];
+        
+        $('#finan_importofx_lanc_tb_sug tbody, #finan_importofx_lanc_tb_lanc tbody').find('input:checkbox:checked').each(function (i, ipt){
+            ids.push($(this).parents('tr').attr('data-id'));
+        });
+        
+        $("#finan_importofx_trn_tab tbody tr[data-flag=last-click]").attr('data-id',ids).addClass('success');
+        $('#finan_importofx_lancamento').modal('hide');
+    });
+    
 });

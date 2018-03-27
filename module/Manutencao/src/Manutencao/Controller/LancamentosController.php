@@ -135,12 +135,12 @@ class LancamentosController extends GenericController {
             return false;
         }
         $dados = $request->getPost()->toArray();
+     
+        $dados['precomaodeobra']=  str_replace(',', '.',str_replace('.', '',  $dados['precomaodeobra']));
+        $dados['desc']=  str_replace(',', '.',str_replace('.', '',  $dados['desc']));
+//        $dados['precototal']=  str_replace(',', '.',str_replace('.', '',  $dados['precototal']));
         
-        $dados['precomaodeobra']= str_replace(',', '.', $dados['precomaodeobra']);
-        $dados['desc']= str_replace(',', '.', $dados['desc']);
-        $dados['precototal']= str_replace(',', '.', $dados['precototal']);
-        
-        $dados['empresa_id'] = $this->sessao()->getArrayCopy('usuario')['empresa_id'];
+        $dados['empresa_id'] = 1;
         $dados['funcionario_id'] = $this->sessao()->getArrayCopy('usuario')['pessoas_id'];
         $dados['ordemservico'] = 'OS' . (new \DateTime())->format('ymdHis');
 
@@ -153,6 +153,7 @@ class LancamentosController extends GenericController {
         unset($dados['cliente_id']);
         /* salva manutencao */
         $srv_manut = $this->app()->getEntity('Manutencao');
+        
         $result = $srv_manut->salvaManutencaoProdutos($dados);
 
         return new JsonModel($result);
@@ -160,6 +161,7 @@ class LancamentosController extends GenericController {
     
     private function osParaArray($os_bruta){
         $os = [];
+        $os['produtos']=[];
         foreach ($os_bruta as $cada) {
             $os['id']=$cada['id'];
             $os['empresa_id']=$cada['empresa_id'];
@@ -179,13 +181,18 @@ class LancamentosController extends GenericController {
             $os['funcionario']=$cada['funcionario'];
             $os['cliente']=$cada['cliente'];
             $os['placa']=$cada['placa'];
-            $os['produtos'][$cada['produto_id']]['produto_id']=$cada['produto_id'];
-            $os['produtos'][$cada['produto_id']]['produto']=$cada['produto'];
-            $os['produtos'][$cada['produto_id']]['quantidade']=$cada['quantidade'];
-            $os['produtos'][$cada['produto_id']]['precovenda_unit']=$cada['precovenda_unit'];
-            $os['produtos'][$cada['produto_id']]['precototal']=$cada['precototal'];
-            $os['produtos'][$cada['produto_id']]['produto']=$cada['produto'];
+            
+            $produto_id=$cada['produto_id'];
+            if($produto_id>0){
+                $os['produtos'][$produto_id]['produto_id']=$cada['produto_id'];
+                $os['produtos'][$produto_id]['produto']=$cada['produto'];
+                $os['produtos'][$produto_id]['quantidade']=$cada['quantidade'];
+                $os['produtos'][$produto_id]['precovenda_unit']=$cada['precovenda_unit'];
+                $os['produtos'][$produto_id]['precototal']=$cada['precototal'];
+                $os['produtos'][$produto_id]['produto']=$cada['produto'];
+            }
         }
+
         return $os;
     }
 

@@ -110,8 +110,10 @@ $(function () {
         $('#finan_lanc_id, #finan_lanc_descricao, #finan_lanc_valor1, #finan_lanc_dtavencimento1, #finan_lanc_dtapagamento1').val('');
         $('#finan_lanc_situacao1').prop('checked', false);
         $('#finan_lanc_pagamento1').addClass('hide');
-
+        
         $('div[id^=finan_lanc_parcela]:not(:first)').remove();
+        
+        $('input:hidden[id^=finan_lanc_id1]').val(null);
     }
 
     function ativaDesativaDtapagamento(origem) {
@@ -143,8 +145,11 @@ $(function () {
         ativaDesativaDtapagamento($(this).attr('id'));
     });
 
-    $('button[title=Fechar]').click(function () {
+    $('#finan_lanc_janela_fechar').click(function () {
         limpaCamposJanela();
+        finan_lanc_tela_origem = '';
+        finan_lanc_tela_origem_id = 0;
+        finan_lanc_tela_destino_result = {};
     });
 
     $('#finan_lanc_addparcela').click(function () {
